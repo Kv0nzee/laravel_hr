@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () { return view('home');});
-Route::get('/login', function () { return view('auth/login');});
-Route::get('/register', function () { return view('auth/register');});
+
+//user
+Route::get('/login', [AuthUserController::class, 'login']);//show login page
+Route::post('/login', [AuthUserController::class, 'post_login']);//show login page
+
+
+Route::get('/register', [AuthUserController::class, 'register']);//show register page
+Route::post('/register', [AuthUserController::class, 'store']);//store user data
+
+Route::post('/logout', [AuthUserController::class, 'logout']);//logout
