@@ -14,14 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () { return view('home');});
+Route::middleware('auth')->group(function(){
+    Route::get('/', function () { return view('home');});
+    Route::post('/logout', [AuthUserController::class, 'logout']);// user logout
+});
 
-//user
-Route::get('/login', [AuthUserController::class, 'login']);//show login page
-Route::post('/login', [AuthUserController::class, 'post_login']);//show login page
+Route::middleware('guest')->group(function(){
+    //user
+    Route::get('/login', [AuthUserController::class, 'login'])->name('login');//show login page
+    Route::post('/login', [AuthUserController::class, 'post_login']);//show login page
 
-
-Route::get('/register', [AuthUserController::class, 'register']);//show register page
-Route::post('/register', [AuthUserController::class, 'store']);//store user data
-
-Route::post('/logout', [AuthUserController::class, 'logout']);//logout
+    Route::get('/register', [AuthUserController::class, 'register']);//show register page
+    Route::post('/register', [AuthUserController::class, 'store']);//store user data
+});
