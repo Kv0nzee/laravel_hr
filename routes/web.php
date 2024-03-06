@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function(){
     //employee page
     Route::resource('employee', EmployeeController::class);
     Route::get('employee/create', [EmployeeController::class, 'createView']);//create employee
+    Route::post('employee/create', [EmployeeController::class, 'store']);//store employee
 
     Route::post('/logout', [AuthUserController::class, 'logout']);// user logout
 });

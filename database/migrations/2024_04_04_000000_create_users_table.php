@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('birthday')->nullable();
             $table->enum('gender', ['Male', 'Female'])->nullable();
             $table->text('address')->nullable();
+            $table->text('is_present')->default('Yes');
             $table->unsignedBigInteger('department_id')->nullable();
             $table->date('date_of_join')->nullable();
             $table->rememberToken();

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Department;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +20,12 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        Department::insert([
+            ['title' => 'Web Development', 'created_at' => now(), 'updated_at' => now()],
+            ['title' => 'Mobile Development', 'created_at' => now(), 'updated_at' => now()],
+            ['title' => 'Marketing', 'created_at' => now(), 'updated_at' => now()],
+            ['title' => 'Operation', 'created_at' => now(), 'updated_at' => now()],
+            ['title' => 'Finance', 'created_at' => now(), 'updated_at' => now()],
+        ]);
     }
 }
