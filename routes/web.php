@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthUserController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth')->group(function(){
-    Route::get('/', function () { return view('home');});
+    Route::get('/', function () { return view('home');});//index page
+    //employee page
+    Route::resource('employee', EmployeeController::class);
+    Route::get('employee/create', [EmployeeController::class, 'createView']);//create employee
+
     Route::post('/logout', [AuthUserController::class, 'logout']);// user logout
 });
 

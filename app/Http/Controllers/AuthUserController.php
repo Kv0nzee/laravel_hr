@@ -19,10 +19,13 @@ class AuthUserController extends Controller
    public function store(){
 
       $formData = request()->validate([
-         'name'=>['required', 'max:255', 'min:5', Rule::unique('users', 'name')],
-         'email'=>['required', 'email', Rule::unique('users', 'email')],
-         'password'=>['required','min:8', 'same:confirm_Password']
-      ]);
+         'name' => ['required', 'max:255', 'min:5', Rule::unique('users', 'name')],
+         'email' => ['required', 'email', Rule::unique('users', 'email')],
+         'password' => ['required', 'min:8', 'same:confirm_Password'],
+         'phone' => ['required', 'regex:/[0-9]{11}/'],
+     ], [
+         'phone.regex' => 'The phone number must be 11 digits long and contain only numbers.',
+     ]);     
 
       $user = User::create($formData);
 

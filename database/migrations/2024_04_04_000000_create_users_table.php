@@ -17,16 +17,18 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('employee_id')->unique()->nullable();
+            $table->unsignedBigInteger('employee_id')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('nrc_number')->unique()->nullable();
             $table->date('birthday')->nullable();
-            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->enum('gender', ['Male', 'Female'])->nullable();
             $table->text('address')->nullable();
-            $table->bigInteger('department_id')->nullable();
+            $table->unsignedBigInteger('department_id')->nullable();
             $table->date('date_of_join')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('department_id')->references('id')->on('departments');
         });
     }
 

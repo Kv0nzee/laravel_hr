@@ -2,7 +2,7 @@
     <x-slot name="title">
         Login
     </x-slot>
-    <form method="POST" class="flex flex-col items-start justify-center gap-6 px-5 mx-auto md:w-1/2 lg:px-16 md:px-10">
+    <form method="POST" class="flex flex-col items-start justify-center gap-6 px-5 mx-auto md:w-3/5 lg:px-16 md:px-10">
         @csrf
         <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Login</h1>
         <x-form.input name="email" type="email" />

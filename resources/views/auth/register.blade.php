@@ -2,11 +2,12 @@
     <x-slot name="title">
         Register
     </x-slot>
-    <form method="POST" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto md:w-1/2 lg:px-16 md:px-10">
+    <form method="POST" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto md:w-3/5 lg:px-16 md:px-10">
         @csrf
         <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Register</h1>
         <x-form.input name="name"  />
         <x-form.input name="email" type="email" />
+        <x-form.input name="phone" type="number" />
         <x-form.input name="password" type="password" />
         <x-form.input name="confirm Password" type="password" />
         <div class="flex justify-end w-full">

@@ -1,5 +1,5 @@
 <x-layout>
-  <x-slot name="title">
+<x-slot name="title">
     Home
 </x-slot>
   <h1>heelo</h1>
