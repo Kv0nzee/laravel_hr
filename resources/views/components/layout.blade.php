@@ -8,6 +8,7 @@
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.0/css/responsive.dataTables.css" />
     <!-- Flowbite library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <!-- Date Range Picker CSS -->
@@ -22,7 +23,7 @@
     <x-navbar/>
 
     <!-- Main Content Section -->
-    <div class="px-10 py-8 mt-10 ml-60">
+    <div class="mt-20 md:mt-10 md:px-10 md:py-8 md:ml-60">
         {{$slot}}
     </div>
 
@@ -40,6 +41,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <!-- DataTables 2.0.1 JS -->
     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.0/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.0/js/responsive.dataTables.js"></script>
     <!-- DataTables Bootstrap 5 JS -->
     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.bootstrap5.js"></script>
     <!-- Moment.js -->

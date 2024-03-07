@@ -2,7 +2,7 @@
     <x-slot name="title">
         Employees
     </x-slot>
-    <div class="container mt-5">
+    <div style="width:100%"  class="container flex-wrap mt-5">
         <form action="employee/create" method="GET">
             @csrf
             <button type="submit" class="flex items-center px-4 py-2 mb-5 text-sm text-left transition-all bg-gray-600 rounded-lg text-neutral-100 hover:bg-gray-900 ">
@@ -15,12 +15,15 @@
         <table id="myTable" class="table table-bordered">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th class="no-sort no-search"></th>
+                    <th>Employee Id</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Phone</th>
                     <th>Department Name</th>
                     <th>Is Present</th>
-                    <th>Action</th> <!-- Add an action column -->
+                    <th class="no-sort no-search" hidden>Updated At</th>
+                    <th class="no-sort no-search">Action</th> 
                 </tr>
             </thead>
             <tbody>
@@ -32,16 +35,39 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var table = $('#myTable').DataTable({
+            responsive: true,
             processing: true,
             serverSide: true,
             ajax: '{{ route("employee.index") }}', 
             columns: [
-                { data: 'id', name: 'id' }, 
+                { data: 'plus-icon', name: 'plus-icon' }, 
+                { data: 'employee_id', name: 'employee_id' }, 
                 { data: 'name', name: 'name' },
                 { data: 'email', name: 'email' },
+                { data: 'phone', name: 'phone' },
                 { data: 'department_name', name: 'department_name' },
                 { data: 'is_present', name: 'is_present' },
-                { data: 'action', name: 'action', orderable: false, searchable: false } // Action column
+                { data: 'updated_at', name: 'updated_at' },
+                { data: 'action', name: 'action', orderable: false, searchable: true } // Action column
+            ],
+            order: [[7, "desc"]],
+            columnDefs:[
+                {
+                    "targets": [7],
+                    "visible": false
+                },
+                {
+                    "targets": [0],
+                    "class": "control"
+                },
+                {
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'no-search',
+                    "searchable": false
+                }
             ]
         });
     });

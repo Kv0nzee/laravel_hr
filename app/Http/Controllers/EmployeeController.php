@@ -26,9 +26,15 @@ class EmployeeController extends Controller
                         return '<span class="text-danger">Leave</span>';
                     }
                 })
+                ->editColumn('updated_at', function($each){
+                    return Carbon::parse($each->updated_at)->format('Y-m-d H:i:s');
+                })
                 ->addColumn('action', function($row) {
                     $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
                     return $actionBtn;
+                })
+                ->addColumn('plus-icon', function($row){
+                    return null;
                 })
                 ->rawColumns(['action', 'is_present'])
                 ->make(true);

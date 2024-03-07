@@ -5,8 +5,8 @@
     <form method="POST" id="employeeCreate" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto *:lg:px-16 md:px-10">
         @csrf
         <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Create Employee</h1>
-        <div class="flex w-full gap-x-5">
-            <div class="w-1/2">
+        <div class="w-full md:flex md:gap-x-5">
+            <div class="w-full md:w-1/2">
                 <x-form.input label="Employee Id" name="employee_id" type="number"  />
                 <x-form.input label="Name" name="name"  />
                 <x-form.input label="Email" name="email" type="email" />
@@ -14,7 +14,7 @@
                 <x-form.input label="Phone Number" name="phone" type="number" />
                 <x-form.input label="NRC Number" name="nrc_number" />
             </div>
-            <div class="w-1/2">
+            <div class="w-full md:w-1/2">
                 <x-form.inputSelect label="Gender" name="gender" :options="['Male', 'Female']"/>
                 <x-form.input label="Birth Date" name="birthday" />
                 <x-form.inputSelect label="Department Name" name="department_id" :options=$departments/>
