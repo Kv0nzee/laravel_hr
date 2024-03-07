@@ -2,43 +2,45 @@
     <x-slot name="title">
         Employees
     </x-slot>
-    <div style="width:100%"  class="container flex-wrap mt-5">
+    <div class="w-full mt-5">
         <form action="employee/create" method="GET">
             @csrf
-            <button type="submit" class="flex items-center px-4 py-2 mb-5 text-sm text-left transition-all bg-gray-600 rounded-lg text-neutral-100 hover:bg-gray-900 ">
+            <button type="submit" class="flex items-center px-4 py-2 text-sm text-left transition-all bg-gray-600 rounded-lg text-neutral-100 hover:bg-gray-900 ">
                 <p>Create</p>  
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                  </svg>
+                </svg>
             </button>
-          </form> 
-        <table id="myTable" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th class="no-sort no-search"></th>
-                    <th>Employee Id</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Department Name</th>
-                    <th>Is Present</th>
-                    <th class="no-sort no-search" hidden>Updated At</th>
-                    <th class="no-sort no-search">Action</th> 
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        </form> 
+        <div class="w-full overflow-hidden table-responsive">
+            <table id="myTable"  class="table w-full display table-bordered">
+                <thead>
+                    <tr>
+                        <th class="hidden no-sort no-search"></th>
+                        <th>Employee Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Department Name</th>
+                        <th>Is Present</th>
+                        <th class="hidden no-sort no-search" hidden>Updated At</th>
+                        <th class="no-sort no-search">Action</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 </x-layout>
 
 <script type="text/javascript">
     $(document).ready(function () {
         var table = $('#myTable').DataTable({
-            responsive: true,
             processing: true,
             serverSide: true,
             ajax: '{{ route("employee.index") }}', 
+            responsive: true,
             columns: [
                 { data: 'plus-icon', name: 'plus-icon' }, 
                 { data: 'employee_id', name: 'employee_id' }, 
@@ -53,12 +55,12 @@
             order: [[7, "desc"]],
             columnDefs:[
                 {
-                    "targets": [7],
+                    "targets": "hidden",
                     "visible": false
                 },
                 {
                     "targets": [0],
-                    "class": "control"
+                    "class": "control",
                 },
                 {
                     "targets": 'no-sort',
