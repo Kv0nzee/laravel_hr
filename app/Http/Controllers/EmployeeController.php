@@ -6,6 +6,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
 
@@ -31,12 +32,7 @@ class EmployeeController extends Controller
                 })
                 ->addColumn('action', function($each) {
                     $editBtn = '<a href="/employee/' . $each->id . '/edit" class="edit btn btn-sm"><i class="text-success bi bi-pencil-square"></i></a>';
-                    $deleteBtn = '<form action="/employee/' . $each->id . '/delete"" method="POST" class="d-inline">
-                                        @csrf
-                                        @method("DELETE")
-                                        <button type="submit" class="delete btn btn-sm"><i class="text-danger bi bi-trash"></i></button>
-                                    </form>';
-
+                    $deleteBtn = '<a href="#" data-id="'. $each->id .'" class="delete btn btn-sm"><i class="text-danger bi bi-trash"></i></a>';
                     $detailBtn = '<a href="/employee/' . $each->id . '/info" class="detail btn btn-sm"><i class="bi text-info bi-info-square"></i></a>';
                     return "<div class='flex justify-between btnflex'>". $detailBtn . $editBtn . ' ' . $deleteBtn ."</div>";
                 })
@@ -84,7 +80,9 @@ class EmployeeController extends Controller
             'phone.regex' => 'The phone number must be 11 digits long and contain only numbers.',
         ]);    
 
-        $formData['profile_img'] = request()->file('profile_img')->store('images');
+        if ($request->hasFile('profile_img')) {
+            $formData['profile_img'] = $request->file('profile_img')->store('images');
+        }
         $formData['password'] = Hash::make( $formData['password'] );
         // Convert date format for birthday and date_of_join fields
         $formData['birthday'] = Carbon::createFromFormat('m/d/Y', $formData['birthday'])->format('Y-m-d');
@@ -123,7 +121,15 @@ class EmployeeController extends Controller
         ], [
             'phone.regex' => 'The phone number must be 11 digits long and contain only numbers.',
         ]);    
-        $formData['profile_img'] = request()->file('profile_img') ?  request()->file('profile_img')->store('images') : $user->profile_img;
+        if ($request->hasFile('profile_img')) {
+            // Store the new profile image and update the profile_img field
+            $formData['profile_img'] = $request->file('profile_img')->store('images');
+    
+            // Delete the previous profile image if it exists
+            if ($user->profile_img) {
+                Storage::delete($user->profile_img);
+            }
+        }
         // Check if password is provided and not empty
         if ($request->filled('password')) {
             $formData['password'] = Hash::make($request->password);
@@ -139,8 +145,11 @@ class EmployeeController extends Controller
         return redirect('/employee')->with('success', 'Employee updated: ' . $user->name . ' successfully');    
     }
 
-    public function delete(User $user){
-        dd($user);
+    public function delete($id){
+        $user = User::findorFail($id);
+        $user->delete();
+
+        return redirect('/employee')->with('success', 'Employee deleted: ' . ' successfully');    
     }
 
 }

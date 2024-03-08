@@ -21,9 +21,9 @@ class AuthUserController extends Controller
     ]);
    }
 
-   public function store(){
+   public function store(Request $request){
 
-      $formData = request()->validate([
+      $formData = $request->validate([
          'employee_id' => ['required', 'integer', 'unique:users,employee_id'],
          'name' => ['required', 'max:255', 'min:5', Rule::unique('users', 'name')],
          'email' => ['required', 'email', Rule::unique('users', 'email')],
@@ -40,7 +40,9 @@ class AuthUserController extends Controller
          'phone.regex' => 'The phone number must be 11 digits long and contain only numbers.',
      ]);     
 
-     $formData['profile_img'] = request()->file('profile_img')->store('images');
+     if ($request->hasFile('profile_img')) {
+            $formData['profile_img'] = $request->file('profile_img')->store('images');
+      }
       // Convert date format for birthday and date_of_join fields
       $formData['birthday'] = Carbon::createFromFormat('m/d/Y', $formData['birthday'])->format('Y-m-d');
       $formData['date_of_join'] = Carbon::createFromFormat('m/d/Y', $formData['date_of_join'])->format('Y-m-d');

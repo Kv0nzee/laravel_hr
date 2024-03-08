@@ -4,8 +4,10 @@
     </x-slot>
     
     <div class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto lg:px-16 md:px-10">
-        <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Employee Details</h1>
-        
+        <div class="flex items-center justify-between w-full">
+            <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Employee Details</h1>
+            <img  src="{{'/storage/'. $user->profile_img }}" alt="profile image" class=" rounded-full object-contain w-40 h-40 {{ $user->profile_img ? '' : 'hidden' }}">
+        </div>        
         <div class="w-full md:flex md:gap-x-5">
             <div class="w-full md:w-1/2">
                 <div class="flex items-center w-full" style="margin-bottom: 30px">

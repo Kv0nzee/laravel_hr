@@ -12,7 +12,7 @@
                 <x-form.input name="phone" label="Phone Number" type="number" />
                 <x-form.input name="password" label="Password" type="password" />
                 <x-form.input name="confirm_password" label="Confirm Password" type="password" />
-                <x-form.input label="Profile Picture(PNG, JPEG only)" name="profile_img" type="file" accept="image/png, image/jpeg"/>
+                <x-form.input :required="false" label="Profile Picture(PNG, JPEG only)Optional*" name="profile_img" type="file" accept="image/png, image/jpeg"/>
                 <img id="previewImage" src="#" alt="Preview" class="hidden object-cover w-full h-20 ">
             </div>
             <div class="w-full md:w-1/2">

@@ -72,5 +72,42 @@
                 }
             ]
         });
+
+        $('#myTable').on('click', '.delete', function(e) {
+            e.preventDefault(); // Prevent default link behavior
+
+            // Get the post ID from the data-id attribute of the delete button
+            var id = $(this).data('id');
+
+            // Show toastr confirmation dialog
+            toastr.warning('Are you sure you want to delete this employee? Click to confirm, else it will cancel', 'Confirmation', {
+                closeButton: true,
+                positionClass: 'toast-top-right',
+                onclick: function (toast) {
+                    deletePost(id);
+                    toastr.remove(toast.toastId);
+                },
+                onclose: function () {
+                    toastr.clear();
+                }
+            });
+        });
+
+        function deletePost(id) {
+            $.ajax({
+                url: '/employee/' + id + '/delete', // Adjust the URL as per your route
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    toastr.success(response.message, 'Success');
+                },
+                error: function(xhr, status, error) {
+                    toastr.success(response.message, 'Success');
+                    // toastr.error(xhr.responseJSON.message, 'Error');
+                }
+            });
+        }
     });
 </script>
