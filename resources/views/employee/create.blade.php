@@ -2,7 +2,7 @@
     <x-slot name="title">
         Create Employees
     </x-slot>
-    <form method="POST" id="employeeCreate" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto *:lg:px-16 md:px-10">
+    <form  enctype="multipart/form-data" method="POST" id="employeeCreate" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto *:lg:px-16 md:px-10">
         @csrf
         <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Create Employee</h1>
         <div class="w-full md:flex md:gap-x-5">
@@ -13,6 +13,8 @@
                 <x-form.input label="Password" name="password" type="password" />
                 <x-form.input label="Phone Number" name="phone" type="number" />
                 <x-form.input label="NRC Number" name="nrc_number" />
+                <x-form.input label="Profile Picture(PNG, JPEG only)" name="profile_img" type="file" accept="image/png, image/jpeg"/>
+                <img id="previewImage" src="#" alt="Preview" class="hidden object-cover w-full h-20 ">
             </div>
             <div class="w-full md:w-1/2">
                 <x-form.inputSelect label="Gender" name="gender" :options="['Male', 'Female']"/>
@@ -56,6 +58,28 @@
     }, function(start, end, label) {
         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
      });
+
+     function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    $('#previewImage').attr('src', e.target.result).show();
+                }
+                
+                reader.readAsDataURL(input.files[0]); // Convert image to data URL
+            }
+    }
+
+     $('input[name="profile_img"]').change(function() {
+            readURL(this);
+        });
+        
+        function changeImageColor() {
+            $('#previewImage').css('border-color', 'red');
+        }
+        
+        changeImageColor();
   });
   
 </script>

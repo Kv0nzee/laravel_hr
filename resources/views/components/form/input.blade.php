@@ -1,4 +1,4 @@
-@props(['name', 'value' => '', 'type' => 'text', 'label', 'required' => true])
+@props(['name', 'value' => '', 'type' => 'text', 'label', 'required' => true, 'accept'=>'' ])
 
 <x-form.inputWrapper>
     <input
@@ -9,6 +9,7 @@
         class="block w-full px-6 pt-6 pb-1 text-gray-800 appearance-none text-md bg-transparent border-b-2 border-gray-800 focus:outline-none focus:ring-0 peer @error($name) border-red-500 @enderror"
         placeholder=" "
         @if($required) required @endif
+        @if($type==="file") accept="{{$accept}}" @endif
     />
     <label
         for="{{ $name }}"

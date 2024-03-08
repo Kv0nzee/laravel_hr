@@ -31,8 +31,13 @@ class EmployeeController extends Controller
                 })
                 ->addColumn('action', function($each) {
                     $editBtn = '<a href="/employee/' . $each->id . '/edit" class="edit btn btn-sm"><i class="text-success bi bi-pencil-square"></i></a>';
-                    $deleteBtn = '<a href="javascript:void(0)" class="delete btn btn-sm"><i class="text-danger bi bi-trash"></i></a>';
-                    $detailBtn = '<a href="javascript:void(0)" class="detail btn btn-sm"><i class="bi text-info bi-info-square"></i></a>';
+                    $deleteBtn = '<form action="/employee/' . $each->id . '/delete"" method="POST" class="d-inline">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="delete btn btn-sm"><i class="text-danger bi bi-trash"></i></button>
+                                    </form>';
+
+                    $detailBtn = '<a href="/employee/' . $each->id . '/info" class="detail btn btn-sm"><i class="bi text-info bi-info-square"></i></a>';
                     return "<div class='flex justify-between btnflex'>". $detailBtn . $editBtn . ' ' . $deleteBtn ."</div>";
                 })
                         
@@ -43,6 +48,13 @@ class EmployeeController extends Controller
                 ->make(true);
         }
         return view('employee.index');
+    }
+
+    public function show($id){
+        $user = User::findOrFail($id);
+        return view('employee.detail', [
+            "user" => $user
+        ]);
     }
 
     public function createView(){
@@ -72,6 +84,7 @@ class EmployeeController extends Controller
             'phone.regex' => 'The phone number must be 11 digits long and contain only numbers.',
         ]);    
 
+        $formData['profile_img'] = request()->file('profile_img')->store('images');
         $formData['password'] = Hash::make( $formData['password'] );
         // Convert date format for birthday and date_of_join fields
         $formData['birthday'] = Carbon::createFromFormat('m/d/Y', $formData['birthday'])->format('Y-m-d');
@@ -110,7 +123,7 @@ class EmployeeController extends Controller
         ], [
             'phone.regex' => 'The phone number must be 11 digits long and contain only numbers.',
         ]);    
-
+        $formData['profile_img'] = request()->file('profile_img') ?  request()->file('profile_img')->store('images') : $user->profile_img;
         // Check if password is provided and not empty
         if ($request->filled('password')) {
             $formData['password'] = Hash::make($request->password);
@@ -126,6 +139,9 @@ class EmployeeController extends Controller
         return redirect('/employee')->with('success', 'Employee updated: ' . $user->name . ' successfully');    
     }
 
+    public function delete(User $user){
+        dd($user);
+    }
 
 }
 

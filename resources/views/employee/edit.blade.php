@@ -2,7 +2,7 @@
     <x-slot name="title">
         Edit Employee
     </x-slot>
-    <form method="POST" action="/employee/<?php echo $user->id ?>/update" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto lg:px-16 md:px-10">
+    <form enctype="multipart/form-data" method="POST" action="/employee/<?php echo $user->id ?>/update" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto lg:px-16 md:px-10">
         @csrf
         @method('PATCH')
         <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Edit Employee</h1>
@@ -14,6 +14,8 @@
                 <x-form.input label="Password" name="password" type="password" :required="false"/>
                 <x-form.input label="Phone Number" name="phone" type="number" :value="$user->phone" />
                 <x-form.input label="NRC Number" name="nrc_number" :value="$user->nrc_number" />
+                <x-form.input label="Profile Picture(PNG, JPEG only)" name="profile_img" type="file" accept="image/png, image/jpeg"/>
+                <img id="previewImage" src="{{'/storage/'. $user->profile_img }}" alt="Preview" class="object-cover w-full h-20 {{ $user->profile_img ? '' : 'hidden' }}">
             </div>
             <div class="w-full md:w-1/2">
                 <x-form.inputSelect label="Gender" name="gender" :options="['Male', 'Female']" :value="$user->gender" />
@@ -56,5 +58,21 @@
         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
      });
   });
-  
+
+  function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    $('#previewImage').attr('src', e.target.result).removeClass('hidden');
+                }
+                
+                reader.readAsDataURL(input.files[0]); // Convert image to data URL
+            }
+        }
+        
+        // Call the function when the file input changes
+        $('input[name="profile_img"]').change(function() {
+            readURL(this);
+     });
 </script>

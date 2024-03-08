@@ -21,8 +21,10 @@ Route::middleware('auth')->group(function(){
     Route::resource('employee', EmployeeController::class);
     Route::get('employee/create', [EmployeeController::class, 'createView']);//create employee
     Route::post('employee/create', [EmployeeController::class, 'store']);//store employee
+    Route::get('/employee/{id}/info', [EmployeeController::class, 'show']);  // employee detail
     Route::get('/employee/{id}/edit', [EmployeeController::class, 'edit']);  // edit employee
     Route::patch('/employee/{id}/update', [EmployeeController::class, 'update']);  // update employee
+    Route::delete('/employee/{id}/delete', [EmployeeController::class, 'delete']);  // delete employee
 
     Route::post('/logout', [AuthUserController::class, 'logout']);// user logout
 });

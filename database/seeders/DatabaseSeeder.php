@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Department;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,5 +28,7 @@ class DatabaseSeeder extends Seeder
             ['title' => 'Operation', 'created_at' => now(), 'updated_at' => now()],
             ['title' => 'Finance', 'created_at' => now(), 'updated_at' => now()],
         ]);
+
+        User::factory()->count(10)->create();
     }
 }

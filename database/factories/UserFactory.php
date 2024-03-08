@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Department;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -24,11 +25,18 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'employee_id' => $this->faker->unique()->randomNumber(),
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => Hash::make('12345678'), // Change 'password' to comply with validation
+            'phone' => $this->faker->numerify('###########'), // Generate a random 11-digit number
+            'nrc_number' => $this->faker->unique()->numerify('#########'), // Generate a unique 9-digit number
+            'birthday' => $this->faker->date,
+            'gender' => $this->faker->randomElement(['Male', 'Female']),
+            'address' => $this->faker->address,
+            'department_id' => Department::inRandomOrder()->first()->id, // Assuming Department model is available
+            'is_present' => $this->faker->randomElement(['Yes', 'No']),
+            'date_of_join' => $this->faker->date,
         ];
     }
 
