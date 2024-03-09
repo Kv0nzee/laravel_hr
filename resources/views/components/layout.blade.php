@@ -46,6 +46,8 @@
     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.0/js/dataTables.responsive.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.0/js/responsive.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.13/features/mark.js/datatables.mark.js"></script>
+    <script src="https://cdn.jsdelivr.net/g/mark.js(jquery.mark.min.js)"></script>
     <!-- DataTables Bootstrap 5 JS -->
     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.bootstrap5.js"></script>
     <!-- Moment.js -->
@@ -74,6 +76,10 @@
             };
             toastr.success("{{ session('success') }}");
         @endif
+
+        $.extend(true, $.fn.dataTable.defaults, {
+            mark: true
+        });
     </script>
 </body>
 </html>

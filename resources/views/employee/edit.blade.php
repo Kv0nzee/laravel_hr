@@ -5,6 +5,7 @@
     <form enctype="multipart/form-data" method="POST" action="/employee/<?php echo $user->id ?>/update" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto lg:px-16 md:px-10">
         @csrf
         @method('PATCH')
+        <a class="flex items-center px-4 py-2 mb-2 text-sm text-left transition-all bg-gray-600 rounded-lg text-neutral-100 hover:bg-gray-900 " href="{{ URL::previous() }}">Go Back</a>
         <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Edit Employee</h1>
         <div class="w-full md:flex md:gap-x-5">
             <div class="w-full md:w-1/2">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthUserController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth')->group(function(){
-    Route::get('/', function () { return view('home');});//index page
+    Route::get('/', [UserController::class, 'index']);//index page
+    Route::get('/profile/{name}', [UserController::class, 'profile']);//profile page
+
     //employee page
     Route::resource('employee', EmployeeController::class);
     Route::get('employee/create', [EmployeeController::class, 'createView']);//create employee

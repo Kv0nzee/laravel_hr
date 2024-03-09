@@ -46,8 +46,11 @@
     text-wrap: nowrap;
 }
 
-
 .table{
     width: 100% !important;
 }
 
+mark{
+    background:#1F2937;
+    color:white;
+}

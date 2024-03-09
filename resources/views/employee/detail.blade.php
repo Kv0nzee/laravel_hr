@@ -4,6 +4,7 @@
     </x-slot>
     
     <div class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto lg:px-16 md:px-10">
+        <a class="flex items-center px-4 py-2 mb-2 text-sm text-left transition-all bg-gray-600 rounded-lg text-neutral-100 hover:bg-gray-900 " href="{{ URL::previous() }}">Go Back</a>
         <div class="flex items-center justify-between w-full">
             <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Employee Details</h1>
             <img  src="{{'/storage/'. $user->profile_img }}" alt="profile image" class=" rounded-full object-contain w-40 h-40 {{ $user->profile_img ? '' : 'hidden' }}">
