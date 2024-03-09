@@ -17,11 +17,26 @@ class EmployeeController extends Controller
         if(\request()->ajax()) {
             $data = User::with('department'); 
             return DataTables::of($data)
+                ->filterColumn('department_name', function($query, $keyword){
+                    $query->whereHas('department', function($query) use ($keyword) {
+                        $query->where('title', 'like', '%' .$keyword. '%');
+                    });
+                })
                 ->addColumn('department_name', function($each){
                     return $each->department ? $each->department->title : '-';
                 })
                 ->editColumn('updated_at', function($each){
                     return Carbon::parse($each->updated_at)->format('Y-m-d H:i:s');
+                })
+                ->editColumn('profile_img', function($each){
+                    if ($each->profile_img) {
+                        return '<div class="flex flex-col items-center" style="width:100px; height:100px;"> 
+                                    <img src="' . asset('storage/' . $each->profile_img) . '" alt="profile image" class="object-contain w-full rounded-full"">
+                                    <p>'. $each->name .'</p>
+                                </div>';
+                    } else {
+                        return $each->name;
+                    }
                 })
                 ->editColumn('is_present', function($each){
                     if($each->is_present === "Yes"){
@@ -40,7 +55,7 @@ class EmployeeController extends Controller
                 ->addColumn('plus-icon', function($each){
                     return '<i class="bi bi-plus"></i>';
                 })
-                ->rawColumns(['action', 'is_present', 'plus-icon'])
+                ->rawColumns(['action', 'is_present', 'plus-icon', 'profile_img'])
                 ->make(true);
         }
         return view('employee.index');
@@ -146,11 +161,18 @@ class EmployeeController extends Controller
     }
 
     public function delete($id){
-        $user = User::findorFail($id);
-        $user->delete();
-
-        return redirect('/employee')->with('success', 'Employee deleted: ' . ' successfully');    
-    }
+        try {
+            $user = User::findOrFail($id);
+            if ($user->profile_img) {
+                Storage::delete($user->profile_img);
+            }
+            $user->delete();
+    
+            return redirect('/employee');  
+        } catch (\Exception $e) {
+            return redirect('/employee');
+        }
+    }    
 
 }
 

@@ -46,9 +46,6 @@
     text-wrap: nowrap;
 }
 
-.btnflex a {
-    margin-right: 10px; /* Adjust the margin as needed */
-}
 
 .table{
     width: 100% !important;

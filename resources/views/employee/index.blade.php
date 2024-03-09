@@ -44,7 +44,7 @@
             columns: [
                 { data: 'plus-icon', name: 'plus-icon' }, 
                 { data: 'employee_id', name: 'employee_id' }, 
-                { data: 'name', name: 'name' },
+                { data: 'profile_img', name: 'profile_img' },
                 { data: 'email', name: 'email' },
                 { data: 'phone', name: 'phone' },
                 { data: 'department_name', name: 'department_name' },
@@ -95,19 +95,26 @@
 
         function deletePost(id) {
             $.ajax({
-                url: '/employee/' + id + '/delete', // Adjust the URL as per your route
-                method: 'DELETE',
+                url: '/employee/' + id + '/delete/',
+                data: {"id": id , _method: 'delete'},
+                type: "POST",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    toastr.success(response.message, 'Success');
+                    toastr.success('Employee deleted successfully');
+                    setTimeout(function(){
+                        window.location.href = '/employee/';
+                    }, 1000);
                 },
                 error: function(xhr, status, error) {
-                    toastr.success(response.message, 'Success');
-                    // toastr.error(xhr.responseJSON.message, 'Error');
+                    toastr.error('Failed to delete employee');
+                    setTimeout(function(){
+                        window.location.href = '/employee/';
+                    }, 1000);
                 }
             });
+
         }
     });
 </script>
