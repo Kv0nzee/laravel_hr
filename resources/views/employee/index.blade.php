@@ -2,6 +2,12 @@
     <x-slot name="title">
         Employees
     </x-slot>
+    <x-slot name="style">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Laravel Mix CSS -->
+        @vite('resources/css/app.css')
+    </x-slot>
     <div class="w-full mt-5">
         <form action="employee/create" method="GET">
             @csrf
@@ -78,7 +84,6 @@
 
             // Get the post ID from the data-id attribute of the delete button
             var id = $(this).data('id');
-
             // Show toastr confirmation dialog
             toastr.warning('Are you sure you want to delete this employee? Click to confirm, else it will cancel', 'Confirmation', {
                 closeButton: true,

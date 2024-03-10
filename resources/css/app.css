@@ -54,3 +54,19 @@ mark{
     background:#1F2937;
     color:white;
 }
+
+/* Warning toast */
+.toast-warning {
+    background-color: #FFA500; /* Orange */
+    color: #FFF; /* White */
+}
+/* Success toast */
+.toast-success {
+    background-color: #32CD32; /* Lime Green */
+    color: #FFF; /* White */
+}
+/* Error toast */
+.toast-error {
+    background-color: #FF6347; /* Tomato */
+    color: #FFF; /* White */
+}

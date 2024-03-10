@@ -2,6 +2,10 @@
     <x-slot name="title">
         Edit Employee
     </x-slot>
+    <x-slot name="style">
+        <!-- Laravel Mix CSS -->
+        @vite('resources/css/app.css')
+      </x-slot>      
     <form enctype="multipart/form-data" method="POST" action="/employee/<?php echo $user->id ?>/update" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto lg:px-16 md:px-10">
         @csrf
         @method('PATCH')

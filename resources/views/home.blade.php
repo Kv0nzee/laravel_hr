@@ -2,12 +2,16 @@
 <x-slot name="title">
     Home
 </x-slot>
+<x-slot name="style">
+  <!-- Laravel Mix CSS -->
+  @vite('resources/css/app.css')
+</x-slot>
 
 <div class="flex items-center justify-center gap-6">
   <div
     class="relative p-5 overflow-hidden transition-all duration-500 transform bg-gray-100 shadow-xl dark:bg-gray-800 hover:shadow-2xl group rounded-xl">
     <div class="flex items-center gap-4">
-      <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwyfHxhdmF0YXJ8ZW58MHwwfHx8MTY5MTg0NzYxMHww&ixlib=rb-4.0.3&q=80&w=1080"
+      <img src="{{ $user->profile_img ? '/storage/'. $user->profile_img : '/storage/images/avatarlogo.jpg' }}"
       class="object-cover object-center w-32 h-32 transition-all duration-500 delay-500 transform rounded-full group-hover:w-36 group-hover:h-36"
     />
       <div class="transition-all duration-500 transform w-fit">

@@ -2,7 +2,10 @@
     <x-slot name="title">
         Employee Details
     </x-slot>
-    
+    <x-slot name="style">
+        <!-- Laravel Mix CSS -->
+        @vite('resources/css/app.css')
+    </x-slot>      
     <div class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto lg:px-16 md:px-10">
         <a class="flex items-center px-4 py-2 mb-2 text-sm text-left transition-all bg-gray-600 rounded-lg text-neutral-100 hover:bg-gray-900 " href="{{ URL::previous() }}">Go Back</a>
         <div class="flex items-center justify-between w-full">

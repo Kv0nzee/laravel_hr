@@ -2,6 +2,10 @@
     <x-slot name="title">
         Create Employees
     </x-slot>
+    <x-slot name="style">
+        <!-- Laravel Mix CSS -->
+        @vite('resources/css/app.css')
+    </x-slot>    
     <form  enctype="multipart/form-data" method="POST" id="employeeCreate" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto *:lg:px-16 md:px-10">
         @csrf
         <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Create Employee</h1>

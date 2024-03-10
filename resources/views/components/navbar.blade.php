@@ -20,7 +20,7 @@
           @endcan()
           <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
             <span class="sr-only">Open user menu</span>
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
+            <img class="w-8 h-8 rounded-full" src="{{ auth()->user()->profile_img ? '/storage/'. auth()->user()->profile_img : '/storage/images/avatarlogo.jpg' }}" alt="user photo">
           </button>
           <!-- Dropdown menu -->
           <div class="z-50 hidden my-4 text-base list-none divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
@@ -29,15 +29,15 @@
               <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{auth()->user()->email}}</span>
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">
-              <li>
-                <form action="/logout" method="POST">
-                  @csrf
-                  <button type="submit" class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">SignOut</button>
-                </form> 
-              </li>
-              <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Register</a>
-                </li>
+               <li>
+                  <a href="/profile/{{auth()->user()->name}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
+               </li>
+               <li>
+                 <form action="/logout" method="POST">
+                   @csrf
+                   <button type="submit" class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">SignOut</button>
+                 </form> 
+               </li>
             </ul>
           </div>
           @else
@@ -71,19 +71,17 @@
          <li>
             <a href="/employee" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
                <span class="sr-only">Employees</span>
-               <svg class="w-6 h-6 me-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h3m8-4h-3m0 12h5m4 4h-3m0-4h3m0 4v3m0-8v-3m0 8l-3 3m3 3l3-3m0 4v3m0-8v-3m0 8h3m0-8h-3m-4-4h3m0 4v3m0-8v-3m0 8l-3 3m3 3l3-3"></path>
-               </svg>
+               <i class="mr-3 text-lg bi bi-people-fill"></i>
                Employees
             </a>
          </li>
          <li>
             <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
-               <span class="sr-only">Team</span>
+               <span class="sr-only">Departments</span>
                <svg class="w-6 h-6 me-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6m0 5h5m-5 0l-5-5m5 5l5-5"></path>
                </svg>
-               Team
+               Departments
             </a>
          </li>
          <li>
