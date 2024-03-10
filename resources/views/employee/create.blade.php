@@ -32,7 +32,6 @@
         <div class="flex justify-end w-full">
             <button type="submit" class="flex flex-row items-center justify-center w-1/4 p-1 text-xs font-semibold transition duration-500 bg-gray-800 border-4 rounded-lg text-zinc-50 hover:text-neutral-800 md:p-2 lg:text-lg hover:bg-white border-neutral-800">Register</button>
         </div>
-        <p class="text-md text-zinc-500">Already have an account? Click <a href="/login" class="text-zinc-900">Login</a>!</p>
     </form>
  
 </x-layout>

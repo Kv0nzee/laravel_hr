@@ -104,7 +104,7 @@ class EmployeeController extends Controller
         $formData['date_of_join'] = Carbon::createFromFormat('m/d/Y', $formData['date_of_join'])->format('Y-m-d');
         $user = User::create($formData);
         
-        return redirect('/employee')->with('success', 'Employee created: ' . $user->name . '  successfully');    
+        return redirect('/employee')->with('success',  'Employee' . $user->name . ' created successfully');    
     }
 
     public function edit($id){

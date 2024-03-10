@@ -76,7 +76,7 @@
             </a>
          </li>
          <li>
-            <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+            <a href="/department" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
                <span class="sr-only">Departments</span>
                <svg class="w-6 h-6 me-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6m0 5h5m-5 0l-5-5m5 5l5-5"></path>
