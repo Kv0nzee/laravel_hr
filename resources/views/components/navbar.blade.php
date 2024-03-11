@@ -93,12 +93,10 @@
            
          </li>
          <li>
-            <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
-               <span class="sr-only">Documents</span>
-               <svg class="w-6 h-6 me-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 14l-5-5m0 0l-5 5m5-5V3m0 5h5m-5 0l-5 5m5-5v8m5-8h5m-5 0l-5 5m5-5v8m0 3v5H3v-5m18 5v-5"></path>
-               </svg>
-               Documents
+            <a href="/permission" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+               <span class="sr-only">Permissions</span>
+               <svg viewBox="-4.8 -4.8 57.60 57.60" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 me-2" fill="#ffffff" stroke="#ffffff" stroke-width="2.688"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><defs><style>.a{fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;}</style></defs><circle class="a" cx="24" cy="24" r="21.5"></circle><circle class="a" cx="24" cy="24" r="6"></circle><path class="a" d="M29.9994,24.0869H45.5"></path><path class="a" d="M30.1372,11.4169a14,14,0,0,1,4.4607,3.4352"></path><path class="a" d="M34.7246,32.999a14.0006,14.0006,0,0,1-4.5874,3.5841"></path><path class="a" d="M16.3751,12.2586A14,14,0,0,1,25.22,10.0533"></path><path class="a" d="M10.0069,24.44A14,14,0,0,1,12.49,16.03"></path><path class="a" d="M17.6441,36.4741a14,14,0,0,1-6.4338-6.78"></path><path class="a" d="M23.7769,35.6972v9.8016"></path><path class="a" d="M34.7246,32.999l6.5479,3.8037"></path><path class="a" d="M11.21,29.6943,4.94,33.9482"></path><path class="a" d="M12.49,16.03,6.0956,12.097"></path><path class="a" d="M25.22,10.0533l.08-7.5139"></path><path class="a" d="M34.5979,14.8521l6.4589-3.9408"></path></g></svg>
+               Permissions
             </a>
          </li>
       </ul>
