@@ -6,11 +6,30 @@
         <!-- Laravel Mix CSS -->
         @vite('resources/css/app.css')
     </x-slot>    
-    <form method="POST" id="roleCreate" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto *:lg:px-16 md:px-10">
+    <form method="POST" id="roleCreate" class="flex flex-col items-start justify-center w-full gap-6 -px-5 mx-auto *:lg:px-16 md:px-10">
         @csrf
-        <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Create Employee</h1>
+        <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Create Role</h1>
         <div class="w-full md:flex md:gap-x-5">
             <x-form.input label="Name" name="name" />
+        </div>
+        <div class="flex flex-wrap items-start justify-start w-full gap-10">
+            @foreach($permissions as $permission)
+                <div class="flex items-center min-w-36">
+                    <input 
+                        id="{{ Str::slug($permission->name) }}-checkbox" 
+                        type="checkbox" 
+                        name="permissions[]"
+                        value="{{ $permission->name }}" 
+                        class="w-6 h-6 rounded teal focus:ring-teal-600"
+                    >
+                    <label 
+                        for="{{ Str::slug($permission->id) }}-checkbox" 
+                        class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-600"
+                    >
+                        {{ ucfirst(str_replace('_', ' ', $permission->name)) }}
+                    </label>
+                </div>
+            @endforeach
         </div>
         </div>
         <div class="flex justify-end w-full">

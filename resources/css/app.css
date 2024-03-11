@@ -70,3 +70,8 @@ mark{
     background-color: #FF6347; /* Tomato */
     color: #FFF; /* White */
 }
+
+.teal {
+    accent-color: rgb(13 148 136);
+  }
+  

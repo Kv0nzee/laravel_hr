@@ -24,6 +24,7 @@
                     <tr>
                         <th class="hidden no-sort no-search"></th>
                         <th>Name</th>
+                        <th>Permissions</th>
                         <th class="hidden no-sort no-search" hidden>Updated At</th>
                         <th class="no-sort no-search">Action</th> 
                     </tr>
@@ -45,6 +46,7 @@
             columns: [
                 { data: 'plus-icon', name: 'plus-icon' }, 
                 { data: 'name', name: 'name' }, 
+                { data: 'permissions', name: 'permissions' }, 
                 { data: 'updated_at', name: 'updated_at' },
                 { data: 'action', name: 'action', orderable: false, searchable: true } // Action column
             ],
