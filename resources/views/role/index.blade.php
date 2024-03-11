@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot name="title">
-        Employees
+        Roles
     </x-slot>
     <x-slot name="style">
         <!-- Bootstrap CSS -->
@@ -9,7 +9,7 @@
         @vite('resources/css/app.css')
     </x-slot>
     <div class="w-full mt-5">
-        <form action="/employee/create" method="GET">
+        <form action="/role/create" method="GET">
             @csrf
             <button type="submit" class="flex items-center px-4 py-2 text-sm text-left transition-all bg-gray-600 rounded-lg text-neutral-100 hover:bg-gray-900 ">
                 <p>Create</p>  
@@ -23,12 +23,7 @@
                 <thead>
                     <tr>
                         <th class="hidden no-sort no-search"></th>
-                        <th>Employee Id</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Department Name</th>
-                        <th>Is Present</th>
                         <th class="hidden no-sort no-search" hidden>Updated At</th>
                         <th class="no-sort no-search">Action</th> 
                     </tr>
@@ -45,16 +40,11 @@
         var table = $('#myTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{ route("employee.index") }}', 
+            ajax: '{{ route("role.index") }}', 
             responsive: true,
             columns: [
                 { data: 'plus-icon', name: 'plus-icon' }, 
-                { data: 'employee_id', name: 'employee_id' }, 
-                { data: 'profile_img', name: 'profile_img' },
-                { data: 'email', name: 'email' },
-                { data: 'phone', name: 'phone' },
-                { data: 'department_name', name: 'department_name' },
-                { data: 'is_present', name: 'is_present' },
+                { data: 'name', name: 'name' }, 
                 { data: 'updated_at', name: 'updated_at' },
                 { data: 'action', name: 'action', orderable: false, searchable: true } // Action column
             ],
@@ -85,7 +75,7 @@
             // Get the post ID from the data-id attribute of the delete button
             var id = $(this).data('id');
             // Show toastr confirmation dialog
-            toastr.warning('Are you sure you want to delete this employee? Click to confirm, else it will cancel', 'Confirmation', {
+            toastr.warning('Are you sure you want to delete this Role? Click to confirm, else it will cancel', 'Confirmation', {
                 closeButton: true,
                 positionClass: 'toast-top-right',
                 onclick: function (toast) {
@@ -100,22 +90,22 @@
 
         function deletePost(id) {
             $.ajax({
-                url: '/employee/' + id + '/delete/',
+                url: '/role/' + id + '/delete/',
                 data: {"id": id , _method: 'delete'},
                 type: "POST",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    toastr.success('Employee deleted successfully');
+                    toastr.success('Role deleted successfully');
                     setTimeout(function(){
-                        window.location.href = '/employee/';
+                        window.location.href = '/role/';
                     }, 1000);
                 },
                 error: function(xhr, status, error) {
-                    toastr.error('Failed to delete employee');
+                    toastr.error('Failed to delete Role');
                     setTimeout(function(){
-                        window.location.href = '/employee/';
+                        window.location.href = '/Role/';
                     }, 1000);
                 }
             });

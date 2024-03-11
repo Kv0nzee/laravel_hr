@@ -9,7 +9,7 @@
         @vite('resources/css/app.css')
     </x-slot>
     <div class="w-full mt-5">
-        <form action="department/create" method="GET">
+        <form action="/department/create" method="GET">
             @csrf
             <button type="submit" class="flex items-center px-4 py-2 text-sm text-left transition-all bg-gray-600 rounded-lg text-neutral-100 hover:bg-gray-900 ">
                 <p>Create</p>  
