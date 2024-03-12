@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 
 class EmployeeController extends Controller
@@ -25,6 +26,14 @@ class EmployeeController extends Controller
                 ->addColumn('department_name', function($each){
                     return $each->department ? $each->department->title : '-';
                 })
+                ->addColumn('roles', function($each) {
+                    $rolesName = '';
+                    foreach ($each->roles as $role) {
+                        $rolesName .= '<span class="inline-block px-3 py-1 mb-2 mr-3 text-sm font-semibold text-gray-200 bg-gray-900 rounded-full">' . $role->name . '</span>';
+                    }
+                
+                    return $rolesName;
+                })         
                 ->editColumn('updated_at', function($each){
                     return Carbon::parse($each->updated_at)->format('Y-m-d H:i:s');
                 })
@@ -55,7 +64,7 @@ class EmployeeController extends Controller
                 ->addColumn('plus-icon', function($each){
                     return '<i class="bi bi-plus"></i>';
                 })
-                ->rawColumns(['action', 'is_present', 'plus-icon', 'profile_img'])
+                ->rawColumns(['action', 'is_present', 'plus-icon', 'profile_img', 'roles'])
                 ->make(true);
         }
         return view('employee.index');
@@ -70,8 +79,11 @@ class EmployeeController extends Controller
 
     public function createView(){
         $departments = Department::orderBy('title')->get();
+        $roles = Role::orderBy('name')->get();
+
         return view('employee.create', [
-            'departments' => $departments
+            'departments' => $departments,
+            'roles' => $roles
         ]);
     }
     
@@ -103,6 +115,7 @@ class EmployeeController extends Controller
         $formData['birthday'] = Carbon::createFromFormat('m/d/Y', $formData['birthday'])->format('Y-m-d');
         $formData['date_of_join'] = Carbon::createFromFormat('m/d/Y', $formData['date_of_join'])->format('Y-m-d');
         $user = User::create($formData);
+        $user->syncRoles($request->roles);
         
         return redirect('/employee')->with('success',  'Employee' . $user->name . ' created successfully');    
     }
@@ -113,9 +126,12 @@ class EmployeeController extends Controller
         $user->date_of_join = Carbon::parse($user->date_of_join)->format('m/d/Y');
         
         $departments = Department::orderBy('title')->get();
+        $roles = Role::orderBy('name')->get();
+        
         return view('employee.edit', [
             'user' => $user,
-            'departments' => $departments
+            'departments' => $departments,
+            'roles' => $roles
         ]);
     }    
 
@@ -156,6 +172,7 @@ class EmployeeController extends Controller
         $formData['date_of_join'] = Carbon::createFromFormat('m/d/Y', $formData['date_of_join'])->format('Y-m-d');
 
         $user->update($formData);
+        $user->syncRoles($request->roles);
 
         return redirect('/employee')->with('success', 'Employee updated: ' . $user->name . ' successfully');    
     }
@@ -166,6 +183,8 @@ class EmployeeController extends Controller
             if ($user->profile_img) {
                 Storage::delete($user->profile_img);
             }
+            
+            $user->syncRoles([]);
             $user->delete();
     
             return redirect('/employee');  

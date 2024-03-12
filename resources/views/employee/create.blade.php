@@ -17,13 +17,14 @@
                 <x-form.input label="Password" name="password" type="password" />
                 <x-form.input label="Phone Number" name="phone" type="number" />
                 <x-form.input label="NRC Number" name="nrc_number" />
-                <x-form.input label="Profile Picture(PNG, JPEG only)" name="profile_img" type="file" accept="image/png, image/jpeg"/>
+                <x-form.input label="Profile Picture(PNG, JPEG only)" :required="false" name="profile_img" type="file" accept="image/png, image/jpeg"/>
                 <img id="previewImage" src="#" alt="Preview" class="hidden object-cover w-full h-20 ">
             </div>
             <div class="w-full md:w-1/2">
                 <x-form.inputSelect label="Gender" name="gender" :options="['Male', 'Female']"/>
                 <x-form.input label="Birth Date" name="birthday" />
-                <x-form.inputSelect label="Department Name" name="department_id" :options=$departments/>
+                <x-form.inputSelect label="Department Name" class="custom_select" name="department_id" :options=$departments/>
+                <x-form.inputMultiSelect label="Set Roles" name="roles[]" :options="$roles" id="name" title="name" class="custom_select" multi="true" />
                 <x-form.inputSelect label="Employment Status" name="is_present" :options="['Yes', 'No']"/>
                 <x-form.inputTextArea label="Address" name="address"  />
                 <x-form.input label="Date Of Join" name="date_of_join" />

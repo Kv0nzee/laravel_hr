@@ -9,7 +9,7 @@
         @vite('resources/css/app.css')
     </x-slot>
     <div class="w-full mt-5">
-        <form action="/employee/create" method="GET">
+        <form action="/employee/create" method="GET" class="w-full">
             @csrf
             <button type="submit" class="flex items-center px-4 py-2 text-sm text-left transition-all bg-gray-600 rounded-lg text-neutral-100 hover:bg-gray-900 ">
                 <p>Create</p>  
@@ -25,15 +25,15 @@
                         <th class="hidden no-sort no-search"></th>
                         <th>Employee Id</th>
                         <th>Name</th>
-                        <th>Email</th>
                         <th>Phone</th>
                         <th>Department Name</th>
+                        <th>Roles</th>
                         <th>Is Present</th>
                         <th class="hidden no-sort no-search" hidden>Updated At</th>
                         <th class="no-sort no-search">Action</th> 
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="w-auto">
                 </tbody>
             </table>
         </div>
@@ -51,9 +51,9 @@
                 { data: 'plus-icon', name: 'plus-icon' }, 
                 { data: 'employee_id', name: 'employee_id' }, 
                 { data: 'profile_img', name: 'profile_img' },
-                { data: 'email', name: 'email' },
                 { data: 'phone', name: 'phone' },
                 { data: 'department_name', name: 'department_name' },
+                { data: 'roles', name: 'roles' },
                 { data: 'is_present', name: 'is_present' },
                 { data: 'updated_at', name: 'updated_at' },
                 { data: 'action', name: 'action', orderable: false, searchable: true } // Action column

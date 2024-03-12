@@ -25,7 +25,8 @@
             <div class="w-full md:w-1/2">
                 <x-form.inputSelect label="Gender" name="gender" :options="['Male', 'Female']" :value="$user->gender" />
                 <x-form.input label="Birth Date" name="birthday" :value="$user->birthday" />
-                <x-form.inputSelect label="Department Name" name="department_id" :options="$departments" :value="$user->department_id" />
+                <x-form.inputSelect label="Department Name" name="department_id" class="custom_select" :options="$departments" :value="$user->department_id" />
+                <x-form.inputMultiSelect label="Set Roles" name="roles[]" :options="$roles" id="name" title="name" class="custom_select" multi="true" :value="$user->getRoleNames()" />
                 <x-form.inputSelect label="Employment Status" name="is_present" :options="['Yes', 'No']" :value="$user->is_present" />
                 <x-form.inputTextArea label="Address" name="address" :value="$user->address" />
                 <x-form.input label="Date Of Join" name="date_of_join" :value="$user->date_of_join" />

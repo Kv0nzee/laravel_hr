@@ -74,4 +74,11 @@ mark{
 .teal {
     accent-color: rgb(13 148 136);
   }
-  
+
+  .select2 {
+    @apply  block px-6 pt-6 pb-1 text-gray-800 appearance-none  bg-transparent border-b-2 border-gray-800 
+  }
+  .select2-selection{
+    outline: none;
+    border: none !important;
+  }
