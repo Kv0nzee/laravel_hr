@@ -85,7 +85,42 @@
 
         $(document).ready(function() {
             $('.custom_select').select2();
-        });
+
+            $('#usermenubtn').on('click', '.signout', function(e) {
+                e.preventDefault(); // Prevent default link behavior
+                e.stopPropagation(); // Prevent the event from bubbling up the DOM tree
+
+                // Show toastr confirmation dialog
+                toastr.warning('Are you sure you want to Logout? Click to confirm, else it will cancel', 'Confirmation', {
+                    closeButton: true,
+                    positionClass: 'toast-top-right',
+                    onclick: function (toast) {
+                        logout(); 
+                        toastr.remove(toast.toastId);
+                    },
+                    onclose: function () {
+                        toastr.clear();
+                    }
+                });
+            });
+
+            function logout() {
+                $.ajax({
+                    url: '/logout',
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    complete: function(response) {
+                        toastr.success('Logout successfully');
+                        setTimeout(function(){
+                            window.location.href = '/';
+                        }, 1000);
+                    }
+                });
+            }
+                });
+
     </script>
 </body>
 </html>

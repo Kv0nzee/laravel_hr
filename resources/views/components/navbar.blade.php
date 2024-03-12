@@ -28,16 +28,19 @@
               <span class="block text-sm text-gray-900 dark:text-white">{{auth()->user()->name}}</span>
               <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{auth()->user()->email}}</span>
             </div>
-            <ul class="py-2" aria-labelledby="user-menu-button">
+            <ul class="py-2" id="usermenubtn" aria-labelledby="user-menu-button">
                <li>
                   <a href="/profile/{{auth()->user()->name}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
                </li>
                <li>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 signout hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">SignOut</a>
+               </li>
+               {{-- <li>
                  <form action="/logout" method="POST">
                    @csrf
                    <button type="submit" class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">SignOut</button>
                  </form> 
-               </li>
+               </li> --}}
             </ul>
           </div>
           @else

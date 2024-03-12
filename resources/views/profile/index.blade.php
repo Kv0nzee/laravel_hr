@@ -7,13 +7,13 @@
       @vite('resources/css/app.css')
   </x-slot>
 
-  <main class="w-full -mt-20 h-100vh md:-mt-10 ">
+  <main class="w-full -mt-20 h-100vh md:-mt-10">
       <section class="relative py-16 bg-gray-200">
          <div class="absolute top-0 w-full bg-center bg-cover h-80"
               style="background-image: url('https://images.unsplash.com/photo-1670974636823-1341d802d5b4?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
               <span id="blackOverlay" class="absolute w-full h-full bg-black opacity-50"></span>
           </div>
-          <div class="absolute bottom-0 left-0 right-0 top-auto w-full overflow-hidden pointer-events-none h-70-px"
+          <div class="absolute bottom-0 left-0 right-0 top-auto w-full overflow-hidden pointer-events-none h-70"
               style="transform: translateZ(0px)">
               <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg"
                   preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
@@ -65,6 +65,16 @@
                           <i class="bi bi-envelope-at-fill"></i>
                             {{$user->email}}
                         </div>
+                        <h1 class="mb-5 font-bold text-gray-800">
+                            Role
+                          </h1>
+                        <p class="text-gray-400">
+                            @foreach ($user->roles as $role)
+                                <span class="inline-block px-3 py-1 mb-2 mr-3 text-sm font-semibold text-gray-200 bg-gray-900 rounded-full">
+                                    {{ $role->name }}
+                                </span>
+                            @endforeach
+                        </p>
                         <div class="justify-center w-full md:flex gap-x-10">
                           <div class="flex flex-col items-start justify-center ">
                               <div class="flex items-center" style="margin-bottom: 30px">
