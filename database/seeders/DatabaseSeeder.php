@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\CompanySetting;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -36,6 +37,10 @@ class DatabaseSeeder extends Seeder
             //profile
             ['name' => 'edit profile', 'guard_name' => 'web'],
             ['name' => 'view profile', 'guard_name' => 'web'],
+
+            // company setting
+            ['name' => 'view company_setting', 'guard_name' => 'web'],
+            ['name' => 'edit company_setting', 'guard_name' => 'web'],
 
             // Employees
             ['name' => 'create employees', 'guard_name' => 'web'],
@@ -82,6 +87,19 @@ class DatabaseSeeder extends Seeder
         $adminRole = Role::where('name', 'Admin')->first();
         $adminRole->syncPermissions($permissions);
         User::factory()->count(10)->create();
-        $user = User::factory()->create(['name' => 'hradmin', 'email' => 'admin@gmail.com', 'password' => 'admin@gmail.com'])->syncRoles($adminRole);
+        User::factory()->create(['name' => 'hradmin', 'email' => 'admin@gmail.com', 'password' => 'admin@gmail.com'])->syncRoles($adminRole);
+        
+        if (CompanySetting::count() === 0) {
+            CompanySetting::create([
+                'company_name' => 'brnyr',
+                'email' => 'brnyr@email.com',
+                'company_phone' => '09118277736',
+                'company_address' => 'No(67) Brnyr Street, Brnyr TownShip, BrNyr Town',
+                'office_start_time' => '09:00:00', 
+                'office_end_time' => '17:00:00',
+                'break_start_time' => '12:00:00', 
+                'break_end_time' => '13:00:00'
+            ]);
+        }
     }
 }

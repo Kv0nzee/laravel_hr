@@ -71,6 +71,15 @@
                Home
             </a>
          </li>
+         @can('view company_setting')
+         <li>
+            <a href="/company_setting" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+               <span class="sr-only">Company Setting</span>
+               <i class="bi bi-buildings mr-3 text-lg"></i>
+               Company Setting
+            </a>
+         </li>
+         @endcan
          @can('view employees')
          <li>
             <a href="/employee" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">

@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthUserController;
+use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Models\CompanySetting;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +24,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function(){
     Route::get('/', [UserController::class, 'index']);//index page
     Route::get('/profile/{name}', [UserController::class, 'profile'])->middleware('permission:view profile');//profile page
+
+    //company setting page
+    Route::resource('company_setting', CompanySettingController::class)->middleware('permission:view company_setting');//company_setting table
+    Route::get('/company_setting/{id}/edit', [CompanySettingController::class, 'edit'])->middleware('permission:edit company_settings');  // edit company_setting
+    Route::patch('/company_setting/{id}/update', [CompanySettingController::class, 'update'])->middleware('permission:edit company_setting');  // update company_setting
 
     //employee page
     Route::resource('employee', EmployeeController::class)->middleware('permission:view employees');//employee table
