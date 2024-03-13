@@ -55,11 +55,28 @@ class EmployeeController extends Controller
                     }
                 })
                 ->addColumn('action', function($each) {
-                    $editBtn = '<a href="/employee/' . $each->id . '/edit" class="edit btn btn-sm"><i class="text-success bi bi-pencil-square"></i></a>';
-                    $deleteBtn = '<a href="#" data-id="'. $each->id .'" class="delete btn btn-sm"><i class="text-danger bi bi-trash"></i></a>';
-                    $detailBtn = '<a href="/employee/' . $each->id . '/info" class="detail btn btn-sm"><i class="bi text-info bi-info-square"></i></a>';
+                    $editBtn = '';
+                    $deleteBtn = '';
+                    $detailBtn = '';
+                    $user = auth()->user();
+                
+                    // Check if user has permission to edit employees
+                    if ($user->can('edit employees')) {
+                        $editBtn = '<a href="/employee/' . $each->id . '/edit" class="edit btn btn-sm"><i class="text-success bi bi-pencil-square"></i></a>';
+                    }
+                
+                    // Check if user has permission to delete employees
+                    if ($user->can('delete employees')) {
+                        $deleteBtn = '<a href="#" data-id="'. $each->id .'" class="delete btn btn-sm"><i class="text-danger bi bi-trash"></i></a>';
+                    }
+                
+                    // Check if user has permission to view employee details
+                    if ($user->can('view employees')) {
+                        $detailBtn = '<a href="/employee/' . $each->id . '/info" class="detail btn btn-sm"><i class="bi text-info bi-info-square"></i></a>';
+                    }
+                
                     return "<div class='flex justify-between btnflex'>". $detailBtn . $editBtn . ' ' . $deleteBtn ."</div>";
-                })
+                })                
                         
                 ->addColumn('plus-icon', function($each){
                     return '<i class="bi bi-plus"></i>';

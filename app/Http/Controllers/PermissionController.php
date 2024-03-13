@@ -19,10 +19,22 @@ class PermissionController extends Controller
                     return Carbon::parse($each->updated_at)->format('Y-m-d H:i:s');
                 })
                 ->addColumn('action', function($each) {
-                    $editBtn = '<a href="/permission/' . $each->id . '/edit" class="edit btn btn-sm"><i class="text-success bi bi-pencil-square"></i></a>';
-                    $deleteBtn = '<a href="#" data-id="'. $each->id .'" class="delete btn btn-sm"><i class="text-danger bi bi-trash"></i></a>';
+                    $editBtn = '';
+                    $deleteBtn = '';
+                    $user = auth()->user();
+                
+                    // Check if user has permission to edit permissions
+                    if ($user->can('edit permissions')) {
+                        $editBtn = '<a href="/permission/' . $each->id . '/edit" class="edit btn btn-sm"><i class="text-success bi bi-pencil-square"></i></a>';
+                    }
+                
+                    // Check if user has permission to delete permissions
+                    if ($user->can('delete permissions')) {
+                        $deleteBtn = '<a href="#" data-id="'. $each->id .'" class="delete btn btn-sm"><i class="text-danger bi bi-trash"></i></a>';
+                    }
+                
                     return "<div class='flex justify-between btnflex'>". $editBtn . ' ' . $deleteBtn ."</div>";
-                })    
+                })                
                 ->addColumn('plus-icon', function($each){
                     return '<i class="bi bi-plus"></i>';
                 })

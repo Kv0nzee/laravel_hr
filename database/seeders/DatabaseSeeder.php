@@ -38,22 +38,28 @@ class DatabaseSeeder extends Seeder
             ['name' => 'view profile', 'guard_name' => 'web'],
 
             // Employees
-            ['name' => 'create employee', 'guard_name' => 'web'],
-            ['name' => 'view employee', 'guard_name' => 'web'],
-            ['name' => 'edit employee', 'guard_name' => 'web'],
-            ['name' => 'delete employee', 'guard_name' => 'web'],
+            ['name' => 'create employees', 'guard_name' => 'web'],
+            ['name' => 'view employees', 'guard_name' => 'web'],
+            ['name' => 'edit employees', 'guard_name' => 'web'],
+            ['name' => 'delete employees', 'guard_name' => 'web'],
         
             // Roles
-            ['name' => 'create role', 'guard_name' => 'web'],
-            ['name' => 'view role', 'guard_name' => 'web'],
-            ['name' => 'edit role', 'guard_name' => 'web'],
-            ['name' => 'delete role', 'guard_name' => 'web'],
+            ['name' => 'create roles', 'guard_name' => 'web'],
+            ['name' => 'view roles', 'guard_name' => 'web'],
+            ['name' => 'edit roles', 'guard_name' => 'web'],
+            ['name' => 'delete roles', 'guard_name' => 'web'],
         
             // Departments
-            ['name' => 'create department', 'guard_name' => 'web'],
-            ['name' => 'view department', 'guard_name' => 'web'],
-            ['name' => 'edit department', 'guard_name' => 'web'],
-            ['name' => 'delete department', 'guard_name' => 'web'],
+            ['name' => 'create departments', 'guard_name' => 'web'],
+            ['name' => 'view departments', 'guard_name' => 'web'],
+            ['name' => 'edit departments', 'guard_name' => 'web'],
+            ['name' => 'delete departments', 'guard_name' => 'web'],
+
+            // Permission
+            ['name' => 'create permissions', 'guard_name' => 'web'],
+            ['name' => 'view permissions', 'guard_name' => 'web'],
+            ['name' => 'edit permissions', 'guard_name' => 'web'],
+            ['name' => 'delete permissions', 'guard_name' => 'web'],
         ]);
 
         Role::insert([
@@ -61,9 +67,21 @@ class DatabaseSeeder extends Seeder
             ['name' => 'HR', 'guard_name' => 'web'],
             ['name' => 'Manager', 'guard_name' => 'web'],
             ['name' => 'Admin', 'guard_name' => 'web'],
-            ['name' => 'Worker', 'guard_name' => 'web'],
+            ['name' => 'User', 'guard_name' => 'web'],
         ]);
 
+
+        $roles = Role::all();
+        foreach ($roles as $role) {
+            $userDefaultPermissions = Permission::whereIn('name', ['edit profile', 'view profile'])->pluck('id');
+            $role->syncPermissions($userDefaultPermissions);
+        }
+
+        // Assign all permissions to the 'Admin' role
+        $permissions = Permission::pluck('id')->all();
+        $adminRole = Role::where('name', 'Admin')->first();
+        $adminRole->syncPermissions($permissions);
         User::factory()->count(10)->create();
+        $user = User::factory()->create(['name' => 'hradmin', 'email' => 'admin@gmail.com', 'password' => 'admin@gmail.com'])->syncRoles($adminRole);
     }
 }

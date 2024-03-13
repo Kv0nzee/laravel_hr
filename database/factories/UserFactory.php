@@ -3,9 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\Department;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role as ModelsRole;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -38,6 +40,17 @@ class UserFactory extends Factory
             'is_present' => $this->faker->randomElement(['Yes', 'No']),
             'date_of_join' => $this->faker->date,
         ];
+    }
+
+    /**
+     * After creating the user, assign a default role.
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user) {
+            $defaultRole = ModelsRole::where('name', 'User')->first();
+            $user->syncRoles($defaultRole);
+        });
     }
 
     /**
