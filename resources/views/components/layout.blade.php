@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$title}}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <!-- Web pass js -->
+    <script src="https://cdn.jsdelivr.net/npm/@laragear/webpass@1/dist/webpass.js" defer></script>
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.0/css/responsive.dataTables.css" />
@@ -121,6 +123,17 @@
             }
                 });
 
+    </script>
+     <script async>
+        if (Webpass.isUnsupported()) {
+            alert("Your browser doesn't support WebAuthn.")
+        }
+        
+        const { success } = await Webpass.attest("/webauthn/register/options", "/webauthn/register")
+        
+        if (success) {
+            window.location.replace("/dashboard")
+        }
     </script>
 </body>
 </html>

@@ -15,13 +15,13 @@
                 <x-form.input label="Company Name" name="company_name" :value="$companySetting->company_name" />
                 <x-form.input label="Email" name="email" :value="$companySetting->email" />
                 <x-form.input label="Company Phone" name="company_phone" :value="$companySetting->company_phone" />
-                <x-form.input label="Office Start Time" name="office_start_time" :value="$companySetting->office_start_time" />
-                <x-form.input label="Office End Time" name="office_end_time" :value="$companySetting->office_end_time" />
+                <x-form.input label="Office Start Time" class="timepicker" name="office_start_time" :value="$companySetting->office_start_time" />
+                <x-form.input label="Office End Time" class="timepicker"  name="office_end_time" :value="$companySetting->office_end_time" />
             </div>
             <div class="w-full md:w-1/2">
                 <x-form.inputTextArea label="Company Address" name="company_address" :value="$companySetting->company_address" />
-                <x-form.input label="Break Start Time" name="break_start_time" :value="$companySetting->break_start_time" />
-                <x-form.input label="Break End Time" name="break_end_time" :value="$companySetting->break_end_time" />
+                <x-form.input label="Break Start Time" class="timepicker"  name="break_start_time" :value="$companySetting->break_start_time" />
+                <x-form.input label="Break End Time" class="timepicker"  name="break_end_time" :value="$companySetting->break_end_time" />
             </div>
         </div>
         <div class="flex justify-end w-full">
@@ -29,3 +29,20 @@
         </div>
     </form>
 </x-layout>
+
+<script>
+    $(document).ready(function(){
+        $('.timepicker').daterangepicker({
+        "singleDatePicker": true,
+        "timePicker": true,
+        "timePicker24Hour": true,
+        "timePickerSeconds": true,
+        "autoApply": true,
+        "locale": {
+            "format": "HH:mm:ss",
+        }
+        }).on('show.daterangepicker', function(ev,picker){
+            $('.calendar-table').hide();
+        })
+    })
+</script>
