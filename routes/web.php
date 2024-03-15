@@ -9,7 +9,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Models\CompanySetting;
 use Illuminate\Support\Facades\Route;
-use Laragear\WebAuthn\Http\Routes as WebAuthnRoutes;
+use Laragear\WebAuthn\WebAuthn;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +22,7 @@ use Laragear\WebAuthn\Http\Routes as WebAuthnRoutes;
 |
 */
 
-WebAuthnRoutes::register(
-    attest: 'auth/register',
-    assert: 'auth/login'
-);
+WebAuthn::routes();
 
 Route::middleware('auth')->group(function(){
     Route::get('/', [UserController::class, 'index']);//index page

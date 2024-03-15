@@ -124,16 +124,8 @@
                 });
 
     </script>
-     <script async>
-        if (Webpass.isUnsupported()) {
-            alert("Your browser doesn't support WebAuthn.")
-        }
-        
-        const { success } = await Webpass.attest("/webauthn/register/options", "/webauthn/register")
-        
-        if (success) {
-            window.location.replace("/dashboard")
-        }
+       <script>
+        const { success } = await Webpass.attest('/auth/register/options', '/auth/register')
     </script>
 </body>
 </html>
