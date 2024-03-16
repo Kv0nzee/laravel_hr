@@ -12,17 +12,18 @@
                 <x-form.input name="phone" label="Phone Number" type="number" />
                 <x-form.input name="password" label="Password" type="password" />
                 <x-form.input name="confirm_password" label="Confirm Password" type="password" />
+                <x-form.input name="pin_code" label="Pin Code" />
                 <x-form.input :required="false" label="Profile Picture(PNG, JPEG only)Optional*" name="profile_img" type="file" accept="image/png, image/jpeg"/>
                 <img id="previewImage" src="#" alt="Preview" class="hidden object-cover w-full h-20 ">
             </div>
             <div class="w-full md:w-1/2">
-                <x-form.input name="employee_id" label="Employee ID" type="number" />
                 <x-form.input name="nrc_number" label="NRC Number" />
+                <x-form.input name="employee_id" label="Employee ID" type="number" />
                 <x-form.inputSelect name="gender" label="Gender" :options="['Male', 'Female']" />
                 <x-form.input name="birthday" label="Birth Date" />
                 <x-form.inputSelect name="department_id" label="Department Name" :options="$departments" />
                 <x-form.inputSelect name="is_present" label="Employment Status" :options="['Yes', 'No']" />
-                <x-form.input name="address" label="Address" />
+                <x-form.inputTextArea label="Address" name="address"  />
                 <x-form.input name="date_of_join" label="Date Of Join" />
             </div>
         </div>

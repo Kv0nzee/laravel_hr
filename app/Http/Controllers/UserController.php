@@ -19,4 +19,11 @@ class UserController extends Controller
             'user'=> $user
         ]);
     }
+
+    public function checkin(){
+        $user = auth()->user();
+        return view('profile.checkin', [
+            'user'=> $user
+        ]);
+    }
 }

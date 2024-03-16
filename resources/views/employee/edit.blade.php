@@ -19,6 +19,7 @@
                 <x-form.input label="Password" name="password" type="password" :required="false"/>
                 <x-form.input label="Phone Number" name="phone" type="number" :value="$user->phone" />
                 <x-form.input label="NRC Number" name="nrc_number" :value="$user->nrc_number" />
+                <x-form.input label="Pin Code" name="pin_code" :value="$user->pin_code" />
                 <x-form.input :required="false" label="Profile Picture(PNG, JPEG only) Optional*" name="profile_img" type="file" accept="image/png, image/jpeg"/>
                 <img id="previewImage" src="{{'/storage/'. $user->profile_img }}" alt="Preview" class="object-cover w-full h-20 {{ $user->profile_img ? '' : 'hidden' }}">
             </div>

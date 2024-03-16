@@ -99,18 +99,20 @@
                               </div>
                           </div>
                       </div>
-                      <h2>Biometric Authentication</h2>
+                      {{--beta--}}
+                      {{-- <h2>Biometric Authentication</h2>
                         <div class="flex items-center justify-around">
                             <div class="px-3 py-6 mt-32 sm:mt-0">
-                               <form id="biometric-register-form">
+                                <form id="biometric-register-form">
+                                    @csrf 
                                     <button
                                         type="submit"
                                         class="w-auto px-4 py-2 mb-1 text-2xl font-bold text-white uppercase transition-all duration-150 ease-linear bg-gray-900 rounded shadow outline-none active:bg-pink-600 hover:shadow-md focus:outline-none sm:mr-2">
-                                        <i class="bi bi-fingerprint"></i>
+                                        <i class="bi bi-fingerprint"></i> Register with Fingerprint
                                     </button>
-                               </form>
-                            </div>
-                        </div>    
+                                </form>
+                            </div>                            
+                        </div>     --}}
                     </div>
                     
                 </div>
@@ -122,17 +124,28 @@
 </x-layout>
 
 <script>
-    $(document).ready(function(){
-        const register  = (event) => {
-            event.preventDefault()
-            new LaraPass({
-                register: 'webauthn/register',
-                registerOptions: 'webauthn/register/options'
-            }).register()
-            .then(response => alert('Registration successful!'))
-            .catch(response => console.console.log(response);)
+    if (Webpass.isUnsupported()) {
+   alert('Your device is not secure enough to use this site!');
+}
+    const register = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(document.getElementById('biometric-register-form'));
+    try {
+        const response = await fetch('/webauthn/register/options', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        const data = await response.json();
+        console.log('Attestation successful:', data.success);
+    } catch (error) {
+        console.error('Error during attestation:', error);
+    }
+}
 
-        document.getElementById('biometric-register-form').addEventListener('submit', register)
-    })
-</script>
+</script> 

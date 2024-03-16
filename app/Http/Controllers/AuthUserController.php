@@ -30,6 +30,7 @@ class AuthUserController extends Controller
          'password' => ['required', 'min:8', 'same:confirm_password'],
          'phone' => ['required', 'regex:/[0-9]{11}/'],
          'nrc_number' => ['required'],
+         'pin_code' => ['required', 'regex:/[0-9]{6}/'],
          'birthday' => ['required', 'date'],
          'gender' => ['required', Rule::in(['Male', 'Female'])],
          'address' => ['required'],
@@ -38,6 +39,7 @@ class AuthUserController extends Controller
          'date_of_join' => ['required', 'date'], 
      ], [
          'phone.regex' => 'The phone number must be 11 digits long and contain only numbers.',
+         'pin_code.regex' => 'The pin number must be 6 digits long and contain only numbers.',
      ]);     
 
      if ($request->hasFile('profile_img')) {

@@ -21,14 +21,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!--alpine js-->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
     {{$style}}
 </head>
-<body>
+<body>   
+    
     <!-- Navbar Component -->
     <x-navbar/>
 
     <!-- Main Content Section -->
-    <div class="mt-20 md:mt-10 md:px-10 md:py-8 md:ml-60">
+    <div class="mt-20 md:mt-10 md:px-10 md:py-8 md:ml-60 ">
         {{$slot}}
     </div>
 
@@ -64,6 +68,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- Toastr Notifications Script -->
     <script>
+        
         @if (session('success'))
             toastr.options = {
                 "closeButton": true,
@@ -123,9 +128,6 @@
             }
                 });
 
-    </script>
-       <script>
-        const { success } = await Webpass.attest('/auth/register/options', '/auth/register')
     </script>
 </body>
 </html>

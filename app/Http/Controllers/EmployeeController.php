@@ -114,6 +114,7 @@ class EmployeeController extends Controller
             'password' => ['required', 'min:8'],
             'phone' => ['required', 'regex:/[0-9]{11}/', Rule::unique('users', 'phone')],
             'nrc_number' => ['required'],
+            'pin_code' => ['required', 'regex:/[0-9]{6}/'],
             'birthday' => ['required', 'date'],
             'gender' => ['required', Rule::in(['Male', 'Female'])],
             'address' => ['required'],
@@ -122,6 +123,7 @@ class EmployeeController extends Controller
             'date_of_join' => ['required', 'date'], 
         ], [
             'phone.regex' => 'The phone number must be 11 digits long and contain only numbers.',
+            'pin_code.regex' => 'The pin number must be 6 digits long and contain only numbers.',
         ]);    
 
         if ($request->hasFile('profile_img')) {
@@ -160,6 +162,7 @@ class EmployeeController extends Controller
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
             'phone' => ['required', 'regex:/[0-9]{11}/', Rule::unique('users', 'phone')->ignore($user->id)],
             'nrc_number' => ['required'],
+            'pin_code' => ['required', 'regex:/[0-9]{6}/'],
             'birthday' => ['required', 'date'],
             'gender' => ['required', Rule::in(['Male', 'Female'])],
             'address' => ['required'],
@@ -168,6 +171,7 @@ class EmployeeController extends Controller
             'date_of_join' => ['required', 'date'], 
         ], [
             'phone.regex' => 'The phone number must be 11 digits long and contain only numbers.',
+            'pin_code.regex' => 'The pin number must be 6 digits long and contain only numbers.',
         ]);    
         if ($request->hasFile('profile_img')) {
             // Store the new profile image and update the profile_img field
