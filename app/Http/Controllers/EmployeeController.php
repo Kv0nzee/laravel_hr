@@ -114,7 +114,7 @@ class EmployeeController extends Controller
             'password' => ['required', 'min:8'],
             'phone' => ['required', 'regex:/[0-9]{11}/', Rule::unique('users', 'phone')],
             'nrc_number' => ['required'],
-            'pin_code' => ['required', 'regex:/[0-9]{6}/'],
+            'pin_code' => ['required', 'regex:/[0-9]{6}/', Rule::unique('users', 'pin_code')],
             'birthday' => ['required', 'date'],
             'gender' => ['required', Rule::in(['Male', 'Female'])],
             'address' => ['required'],
@@ -129,7 +129,16 @@ class EmployeeController extends Controller
         if ($request->hasFile('profile_img')) {
             $formData['profile_img'] = $request->file('profile_img')->store('images');
         }
+        if ($request->filled('pin_code')) {
+            $existingUser = User::all()->first(function ($user) use ($request) {
+                return Hash::check($request->pin_code, $user->pin_code);
+            }); 
+            if ($existingUser) {
+                return redirect()->back()->withErrors(['pin_code' => 'The pin code has already been taken.'])->withInput();
+            }
+        }
         $formData['password'] = Hash::make( $formData['password'] );
+        $formData['pin_code'] = Hash::make( $formData['pin_code'] );
         // Convert date format for birthday and date_of_join fields
         $formData['birthday'] = Carbon::createFromFormat('m/d/Y', $formData['birthday'])->format('Y-m-d');
         $formData['date_of_join'] = Carbon::createFromFormat('m/d/Y', $formData['date_of_join'])->format('Y-m-d');
@@ -162,7 +171,7 @@ class EmployeeController extends Controller
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
             'phone' => ['required', 'regex:/[0-9]{11}/', Rule::unique('users', 'phone')->ignore($user->id)],
             'nrc_number' => ['required'],
-            'pin_code' => ['required', 'regex:/[0-9]{6}/'],
+            'pin_code' => ['regex:/[0-9]{6}/'],
             'birthday' => ['required', 'date'],
             'gender' => ['required', Rule::in(['Male', 'Female'])],
             'address' => ['required'],
@@ -186,9 +195,20 @@ class EmployeeController extends Controller
         if ($request->filled('password')) {
             $formData['password'] = Hash::make($request->password);
         } else {
-            $formData['password'] = Hash::make($user->password);
+            $formData['password'] = $user->password;
         }
-
+        // Check if password is provided and not empty
+        if ($request->filled('pin_code')) {
+            $existingUser = User::all()->first(function ($user) use ($request) {
+                return Hash::check($request->pin_code, $user->pin_code);
+            }); 
+            if ($existingUser && $existingUser->id !== $user->id) {
+                return redirect()->back()->withErrors(['pin_code' => 'The pin code has already been taken.'])->withInput();
+            }
+            $formData['pin_code'] = Hash::make($request->pin_code);
+        } else {
+            $formData['pin_code'] = $user->pin_code;
+        }
         $formData['birthday'] = Carbon::createFromFormat('m/d/Y', $formData['birthday'])->format('Y-m-d');
         $formData['date_of_join'] = Carbon::createFromFormat('m/d/Y', $formData['date_of_join'])->format('Y-m-d');
 

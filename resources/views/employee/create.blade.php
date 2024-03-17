@@ -17,7 +17,7 @@
                 <x-form.input label="Password" name="password" type="password" />
                 <x-form.input label="Phone Number" name="phone" type="number" />
                 <x-form.input label="NRC Number" name="nrc_number" />
-                <x-form.input label="Pin Code" name="pin_code" />
+                <x-form.input label="Pin Code"  type="password" name="pin_code"/>
                 <x-form.input label="Profile Picture(PNG, JPEG only)" :required="false" name="profile_img" type="file" accept="image/png, image/jpeg"/>
                 <img id="previewImage" src="#" alt="Preview" class="hidden object-cover w-full h-20 ">
             </div>

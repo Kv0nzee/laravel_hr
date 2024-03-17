@@ -27,7 +27,8 @@ WebAuthn::routes();
 Route::middleware('auth')->group(function(){
     Route::get('/', [UserController::class, 'index']);//index page
     Route::get('/profile/{name}', [UserController::class, 'profile'])->middleware('permission:view profile');//profile page
-    Route::get('/profile/{name}/checkin', [UserController::class, 'checkin'])->middleware('permission:view profile');//profile page
+    Route::get('/profile/{name}/checkin', [UserController::class, 'checkin'])->middleware('permission:view profile');//checkin page
+    Route::post('/profile/checkPinCode', [UserController::class, 'checkPinCode'])->middleware('permission:view profile');//validate checkin
 
     //company setting page
     Route::resource('company_setting', CompanySettingController::class)->middleware('permission:view company_setting');//company_setting table

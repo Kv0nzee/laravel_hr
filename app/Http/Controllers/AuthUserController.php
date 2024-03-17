@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class AuthUserController extends Controller
@@ -30,7 +31,7 @@ class AuthUserController extends Controller
          'password' => ['required', 'min:8', 'same:confirm_password'],
          'phone' => ['required', 'regex:/[0-9]{11}/'],
          'nrc_number' => ['required'],
-         'pin_code' => ['required', 'regex:/[0-9]{6}/'],
+         'pin_code' => ['required', 'regex:/[0-9]{6}/', Rule::unique('users', 'pin_code')],
          'birthday' => ['required', 'date'],
          'gender' => ['required', Rule::in(['Male', 'Female'])],
          'address' => ['required'],
@@ -46,6 +47,8 @@ class AuthUserController extends Controller
             $formData['profile_img'] = $request->file('profile_img')->store('images');
       }
       // Convert date format for birthday and date_of_join fields
+      $formData['password'] = Hash::make( $formData['password'] );
+      $formData['pin_code'] = Hash::make( $formData['pin_code'] );
       $formData['birthday'] = Carbon::createFromFormat('m/d/Y', $formData['birthday'])->format('Y-m-d');
       $formData['date_of_join'] = Carbon::createFromFormat('m/d/Y', $formData['date_of_join'])->format('Y-m-d');
       $user = User::create($formData);
