@@ -130,9 +130,7 @@ class EmployeeController extends Controller
             $formData['profile_img'] = $request->file('profile_img')->store('images');
         }
         if ($request->filled('pin_code')) {
-            $existingUser = User::all()->first(function ($user) use ($request) {
-                return Hash::check($request->pin_code, $user->pin_code);
-            }); 
+            $existingUser = User::where('pin_code', Hash::make($request->pin_code))->first();
             if ($existingUser) {
                 return redirect()->back()->withErrors(['pin_code' => 'The pin code has already been taken.'])->withInput();
             }
@@ -199,9 +197,7 @@ class EmployeeController extends Controller
         }
         // Check if password is provided and not empty
         if ($request->filled('pin_code')) {
-            $existingUser = User::all()->first(function ($user) use ($request) {
-                return Hash::check($request->pin_code, $user->pin_code);
-            }); 
+            $existingUser = User::where('pin_code', Hash::make($request->pin_code))->first();
             if ($existingUser && $existingUser->id !== $user->id) {
                 return redirect()->back()->withErrors(['pin_code' => 'The pin code has already been taken.'])->withInput();
             }

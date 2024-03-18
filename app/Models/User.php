@@ -53,4 +53,7 @@ class User extends Authenticatable implements WebAuthnAuthenticatable
     public function department(){
         return $this->belongsTo(Department::class);
     }
+    public function checkin_checkout(){
+        return $this->hasMany(CheckinCheckout::class);
+    }
 }

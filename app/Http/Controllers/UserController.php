@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CheckinCheckout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -34,13 +35,37 @@ class UserController extends Controller
             'code' => 'required|string|min:6|max:6',
         ]);
 
-        $userPinCode = auth()->user()->pin_code;
+        $user = auth()->user();
+        $userPinCode = $user->pin_code;
 
-        // Check if the provided code matches the hashed pin code
         if (Hash::check($validatedData['code'], $userPinCode)) {
-            return response()->json(['success' => true], 200);
+            $user_id = $user->id;
+            $existingEntry = CheckinCheckout::where('user_id', $user_id)
+                ->whereDate('date', now()->format('Y-m-d'))
+                ->first();
+
+            if ($existingEntry->checkin_time && $existingEntry->checkout_time) {
+                return response()->json(['success' => false, 'message' => 'User already checked in/ checked out today'], 422);
+            } else {
+                $existingCheckIn = CheckinCheckout::where('user_id', $user_id)
+                    ->whereDate('date', now()->format('Y-m-d'))
+                    ->whereNotNull('checkin_time')
+                    ->first();
+
+                if ($existingCheckIn) {
+                    $existingCheckIn->update(['checkout_time' => now()]);
+                    return response()->json(['success' => true, 'message' => 'Checked out successfully at ' . now()], 200);
+                } else {
+                    CheckinCheckout::create([
+                        'user_id' => $user_id,
+                        'checkin_time' => now(),
+                        'date' => now()->format('Y-m-d')
+                    ]);
+                    return response()->json(['success' => true, 'message' => 'Checked in successfully at ' . now()], 200);
+                }
+            }
         } else {
-            return response()->json(['success' => false], 422);
+            return response()->json(['success' => false, 'message' => 'Incorrect PIN'], 422);
         }
     }
 }

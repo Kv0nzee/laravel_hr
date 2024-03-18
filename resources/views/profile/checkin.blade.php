@@ -8,7 +8,13 @@
     </x-slot>
   
     <main class="flex flex-col items-start w-full gap-6 px-5 mx-auto lg:px-16 md:px-10" x-data="app()">
-        <h1 class="text-2xl font-bold text-neutral-800 lg:text-3xl">Check-in</h1>
+        <h1 class="text-2xl font-bold text-neutral-800 lg:text-3xl">
+            @if ($user->checkin_checkout()->whereDate('date', now()->format('Y-m-d'))->exists())
+                Check Out
+            @else
+                Check In
+            @endif
+        </h1>        
         <h2 class="mb-5 text-sm font-bold text-gray-800 md:text-lg lg:text-xl">Please Scan the QR Code or Enter Your PIN</h2>
         <div class="flex items-start justify-between w-full">
             <div>
@@ -31,34 +37,41 @@
    function app() {
     return {
         pinlength: 6,
+        resetAllValues() {
+            for (let x = 0; x < this.pinlength; x++) {
+                document.getElementById(`codefield_${x}`).value = '';
+            }
+            document.getElementById(`codefield_${0}`).focus();
+        },
         resetValue(i) {
             for (let x = 0; x < this.pinlength; x++) {
-                if (x >= i) document.getElementById(`codefield_${x}`).value = ''
+                if (x >= i) document.getElementById(`codefield_${x}`).value = '';
             }
         },
         stepForward(i) {
             if (document.getElementById(`codefield_${i}`).value && i != this.pinlength - 1) {
-                document.getElementById(`codefield_${i+1}`).focus()
-                document.getElementById(`codefield_${i+1}`).value = ''
+                document.getElementById(`codefield_${i+1}`).focus();
+                document.getElementById(`codefield_${i+1}`).value = '';
             }
-            this.checkPin()
+            this.checkPin();
         },
         stepBack(i) {
             if (document.getElementById(`codefield_${i-1}`).value && i != 0) {
-                document.getElementById(`codefield_${i-1}`).focus()
-                document.getElementById(`codefield_${i-1}`).value = ''
+                document.getElementById(`codefield_${i-1}`).focus();
+                document.getElementById(`codefield_${i-1}`).value = '';
             }
         },
         checkPin() {
-            let code = ''
+            let code = '';
             for (let i = 0; i < this.pinlength; i++) {
-                code += document.getElementById(`codefield_${i}`).value
+                code += document.getElementById(`codefield_${i}`).value;
             }
             if (code.length == this.pinlength) {
-                this.validatePin(code)
+                this.validatePin(code);
             }
         },
         validatePin(code) {
+            let self = this; // Store a reference to 'this'
             $.ajax({
                 url: '/profile/checkPinCode',
                 data: {"code": code}, // Send both code and pinCode to the server
@@ -67,14 +80,16 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    toastr.success('PIN code validated successfully');
+                    toastr.success(response.message);
+                    self.resetAllValues();
                 },
                 error: function(xhr, status, error) {
-                    toastr.error('Failed to validate PIN code');
+                    var errorMessage = JSON.parse(xhr.responseText).message;
+                    toastr.error(errorMessage);
+                    self.resetAllValues();
                 }
             });
         }
     };
 }
-
 </script>

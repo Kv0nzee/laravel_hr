@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->timestamp('checkin_time')->nullable();
             $table->timestamp('checkout_time')->nullable();
+            $table->date('date')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
