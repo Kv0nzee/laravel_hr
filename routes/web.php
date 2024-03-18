@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthUserController;
 use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\DepartmentController;
@@ -67,6 +68,14 @@ Route::middleware('auth')->group(function(){
     Route::get('/permission/{id}/edit', [PermissionController::class, 'edit'])->middleware('permission:edit permissions');  // edit permission
     Route::patch('/permission/{id}/update', [PermissionController::class, 'update'])->middleware('permission:edit permissions');  // update permission
     Route::delete('/permission/{id}/delete', [PermissionController::class, 'delete'])->middleware('permission:delete permissions');  // delete role
+
+    //attendance page
+    Route::resource('attendance', AttendanceController::class)->middleware('permission:view attendance');//attendance table
+    Route::get('attendance/create', [AttendanceController::class, 'createView'])->middleware('permission:create attendance');//create attendance
+    Route::post('attendance/create', [AttendanceController::class, 'store'])->middleware('permission:create attendance');//store attendance
+    Route::get('/attendance/{id}/edit', [AttendanceController::class, 'edit'])->middleware('permission:edit attendance');  // edit attendance
+    Route::patch('/attendance/{id}/update', [AttendanceController::class, 'update'])->middleware('permission:edit attendance');  // update attendance
+    Route::delete('/attendance/{id}/delete', [AttendanceController::class, 'delete'])->middleware('permission:delete attendance');  // delete role
 
     Route::post('/logout', [AuthUserController::class, 'logout']);// user logout
 });

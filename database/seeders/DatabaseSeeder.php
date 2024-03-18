@@ -65,6 +65,13 @@ class DatabaseSeeder extends Seeder
             ['name' => 'view permissions', 'guard_name' => 'web'],
             ['name' => 'edit permissions', 'guard_name' => 'web'],
             ['name' => 'delete permissions', 'guard_name' => 'web'],
+
+            //Attendance 
+            // Permission
+            ['name' => 'create attendance', 'guard_name' => 'web'],
+            ['name' => 'view attendance', 'guard_name' => 'web'],
+            ['name' => 'edit attendance', 'guard_name' => 'web'],
+            ['name' => 'delete attendance', 'guard_name' => 'web'],
         ]);
 
         Role::insert([

@@ -44,8 +44,8 @@ class UserController extends Controller
                 ->whereDate('date', now()->format('Y-m-d'))
                 ->first();
 
-            if ($existingEntry->checkin_time && $existingEntry->checkout_time) {
-                return response()->json(['success' => false, 'message' => 'User already checked in/ checked out today'], 422);
+            if ($existingEntry?->checkin_time && $existingEntry?->checkout_time) {
+                return response()->json(['success' => false, 'message' => 'User already checked out today'], 422);
             } else {
                 $existingCheckIn = CheckinCheckout::where('user_id', $user_id)
                     ->whereDate('date', now()->format('Y-m-d'))
