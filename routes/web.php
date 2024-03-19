@@ -7,6 +7,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ScannerController;
 use App\Http\Controllers\UserController;
 use App\Models\CompanySetting;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +29,9 @@ WebAuthn::routes();
 Route::middleware('auth')->group(function(){
     Route::get('/', [UserController::class, 'index']);//index page
     Route::get('/profile/{name}', [UserController::class, 'profile'])->middleware('permission:view profile');//profile page
-    Route::get('/profile/{name}/checkincheckout', [UserController::class, 'checkin'])->middleware('permission:view profile');//checkin page
-    Route::post('/profile/checkPinCode', [UserController::class, 'checkPinCode'])->middleware('permission:view profile');//validate checkin
+    Route::get('/checkincheckout', [ScannerController::class, 'checkin']);//checkin page
+    Route::post('/checkincheckout', [ScannerController::class, 'checkPinCode']);//validate checkin
+    Route::get('/qrscanner', [ScannerController::class, 'qrscanner']);//qr scanner
 
     //company setting page
     Route::resource('company_setting', CompanySettingController::class)->middleware('permission:view company_setting');//company_setting table

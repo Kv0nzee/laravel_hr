@@ -11,8 +11,8 @@
         <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Create Attendance</h1>
         <div class="w-full gap-y-5">
             <x-form.inputSelect label="Employee Name" class="custom_select" title="name" name="user_id" :options=$users/>
-            <x-form.input label="Checkin Time" class="timepicker" name="checkin_time"  />
-            <x-form.input label="Checkout Time" class="timepicker"  name="checkout_time" />
+            <x-form.input label="Checkin Time" class="timepicker" name="checkin_time" value="09:00" />
+            <x-form.input label="Checkout Time" class="timepicker"  name="checkout_time" value="17:00" />
         </div>
         </div>
         <div class="flex justify-end w-full">

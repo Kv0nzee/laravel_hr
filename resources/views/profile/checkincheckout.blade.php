@@ -73,7 +73,7 @@
         validatePin(code) {
             let self = this; // Store a reference to 'this'
             $.ajax({
-                url: '/profile/checkPinCode',
+                url: '/checkincheckout',
                 data: {"code": code}, // Send both code and pinCode to the server
                 type: "POST",
                 headers: {

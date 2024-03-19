@@ -67,6 +67,13 @@ class AttendanceController extends Controller
         'checkin_time' => ['required', 'date_format:H:i:s'],
         'checkout_time' => ['nullable', 'date_format:H:i:s', 'after:checkin_time'],
     ]);    
+    $existingEntry = CheckinCheckout::where('user_id', $formData['user_id'])
+                ->whereDate('date', now()->format('Y-m-d'))
+                ->first();
+
+    if($existingEntry){
+        return redirect('/attendance')->with('error', 'User already checked out at ' . $existingEntry->checkout_time);    
+    };
 
     $formData['date'] = now()->format('Y-m-d');
 
@@ -88,7 +95,6 @@ class AttendanceController extends Controller
     public function update(Request $request, $id){
         $attendance = CheckinCheckout::findOrFail($id);
         $formData = $request->validate([
-            'user_id' => ['required', 'exists:users,id'],
             'checkin_time' => ['required', 'date_format:H:i:s'],
             'checkout_time' => ['nullable', 'date_format:H:i:s', 'after:checkin_time'],
         ]);    

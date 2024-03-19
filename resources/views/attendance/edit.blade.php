@@ -11,7 +11,10 @@
         @method('PATCH')
         <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Edit Attendance</h1>
         <div class="w-full gap-y-5">
-            <x-form.inputSelect  label="Employee Name" class="custom_select" title="name" name="user_id" :options=$users :value="$attendance->employee->id"/>
+            <div class="relative w-full">
+                <label class="absolute text-md text-zinc-800 duration-150 transform -translate-y-5 scale-75 top-0 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3" >Employee Name:</label>
+                <p class="block w-full px-6 pb-1 text-gray-800 bg-transparent border-b-2 border-gray-800 appearance-none text-md">{{ $attendance->employee->name }}</p>
+            </div>
             <x-form.input label="Checkin Time" class="timepicker" name="checkin_time" :value="$attendance->checkin_time"  />
             <x-form.input label="Checkout Time" class="timepicker"  name="checkout_time" :value="$attendance->checkout_time"/>
         </div>
