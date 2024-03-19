@@ -45,7 +45,7 @@ class UserController extends Controller
                 ->first();
 
             if ($existingEntry?->checkin_time && $existingEntry?->checkout_time) {
-                return response()->json(['success' => false, 'message' => 'User already checked out today'], 422);
+                return response()->json(['success' => false, 'message' => 'User already checked out at ' . $existingEntry->checkout_time], 422);
             } else {
                 $existingCheckIn = CheckinCheckout::where('user_id', $user_id)
                     ->whereDate('date', now()->format('Y-m-d'))
@@ -53,15 +53,15 @@ class UserController extends Controller
                     ->first();
 
                 if ($existingCheckIn) {
-                    $existingCheckIn->update(['checkout_time' => now()]);
-                    return response()->json(['success' => true, 'message' => 'Checked out successfully at ' . now()], 200);
+                    $existingCheckIn->update(['checkout_time' => now()->format('H:i:s')]);
+                    return response()->json(['success' => true, 'message' => 'Checked out successfully at ' . now()->format('H:i:s')], 200);
                 } else {
                     CheckinCheckout::create([
                         'user_id' => $user_id,
-                        'checkin_time' => now(),
+                        'checkin_time' => now()->format('H:i:s'),
                         'date' => now()->format('Y-m-d')
                     ]);
-                    return response()->json(['success' => true, 'message' => 'Checked in successfully at ' . now()], 200);
+                    return response()->json(['success' => true, 'message' => 'Checked in successfully at ' . now()->format('H:i:s')], 200);
                 }
             }
         } else {

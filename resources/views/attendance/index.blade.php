@@ -9,7 +9,7 @@
         @vite('resources/css/app.css')
     </x-slot>
     <div class="w-full mt-5">
-        <form action="/permission/create" method="GET">
+        <form action="/attendance/create" method="GET">
             @csrf
             <button type="submit" class="flex items-center px-4 py-2 text-sm text-left transition-all bg-gray-600 rounded-lg text-neutral-100 hover:bg-gray-900 ">
                 <p>Create</p>  
@@ -81,7 +81,7 @@
             // Get the post ID from the data-id attribute of the delete button
             var id = $(this).data('id');
             // Show toastr confirmation dialog
-            toastr.warning('Are you sure you want to delete this permission? Click to confirm, else it will cancel', 'Confirmation', {
+            toastr.warning('Are you sure you want to delete this checkin checkout entry? Click to confirm, else it will cancel', 'Confirmation', {
                 closeButton: true,
                 positionClass: 'toast-top-right',
                 onclick: function (toast) {
@@ -96,22 +96,22 @@
 
         function deletePost(id) {
             $.ajax({
-                url: '/permission/' + id + '/delete/',
+                url: '/attendance/' + id + '/delete/',
                 data: {"id": id , _method: 'delete'},
                 type: "POST",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    toastr.success('Permission deleted successfully');
+                    toastr.success('checkin checkout entry deleted successfully');
                     setTimeout(function(){
-                        window.location.href = '/permission/';
+                        window.location.href = '/attendance/';
                     }, 1000);
                 },
                 error: function(xhr, status, error) {
-                    toastr.error('Failed to delete permission');
+                    toastr.error('Failed to delete checkin checkout entry');
                     setTimeout(function(){
-                        window.location.href = '/permission/';
+                        window.location.href = '/attendance/';
                     }, 1000);
                 }
             });

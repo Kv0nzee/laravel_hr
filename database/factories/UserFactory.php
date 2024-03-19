@@ -31,6 +31,7 @@ class UserFactory extends Factory
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'password' => Hash::make('12345678'), // Change 'password' to comply with validation
+            'pin_code' => Hash::make('12345678'), // Change 'password' to comply with validation
             'phone' => $this->faker->numerify('###########'), // Generate a random 11-digit number
             'nrc_number' => $this->faker->unique()->numerify('#########'), // Generate a unique 9-digit number
             'birthday' => $this->faker->date,

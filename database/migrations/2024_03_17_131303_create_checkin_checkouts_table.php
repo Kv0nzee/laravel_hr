@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('checkin_checkouts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->timestamp('checkin_time')->nullable();
-            $table->timestamp('checkout_time')->nullable();
+            $table->time('checkin_time')->nullable();
+            $table->time('checkout_time')->nullable();
             $table->date('date')->nullable();
             $table->timestamps();
 

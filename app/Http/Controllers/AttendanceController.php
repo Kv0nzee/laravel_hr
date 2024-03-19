@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CheckinCheckout;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -15,14 +16,13 @@ class AttendanceController extends Controller
         if(\request()->ajax()) {
             $data = CheckinCheckout::with('employee'); // Eager load the 'employee' relationship
             return DataTables::of($data)
+                ->filterColumn('employee_name', function($query, $keyword){
+                    $query->whereHas('employee', function($query) use ($keyword) {
+                        $query->where('name', 'like', '%' .$keyword. '%');
+                    });
+                })
                 ->editColumn('updated_at', function($each){
                     return Carbon::parse($each->updated_at)->format('Y-m-d H:i:s');
-                })
-                ->editColumn('checkout_time', function($each){
-                    return Carbon::parse($each->updated_at)->format('H:i:s');
-                })
-                ->editColumn('checkin_time', function($each){
-                    return Carbon::parse($each->updated_at)->format('H:i:s');
                 })
                 ->addColumn('employee_name', function($each){
                     return $each->employee ? $each->employee->name : '-';
@@ -54,43 +54,55 @@ class AttendanceController extends Controller
     }
 
     public function createView(){
-        return view('permission.create');
+        $users = User::latest()->get();
+        return view('attendance.create', [
+            'users' => $users
+        ]);
     }
 
     public function store(Request $request)
-    {
-        $formData = $request->validate([
-            'name' => ['required', 'max:255', 'min:3', Rule::unique('permissions', 'name')]
-        ]);    
+{
+    $formData = $request->validate([
+        'user_id' => ['required', 'exists:users,id'],
+        'checkin_time' => ['required', 'date_format:H:i:s'],
+        'checkout_time' => ['nullable', 'date_format:H:i:s', 'after:checkin_time'],
+    ]);    
 
-        $permission = Permission::create($formData);
-        
-        return redirect('/permission')->with('success',  $permission->name . 'Permission created: successfully');    
-    }
+    $formData['date'] = now()->format('Y-m-d');
+
+    $checkinCheckout = CheckinCheckout::create($formData);
+    
+    return redirect('/attendance')->with('success', 'Check-in checkout entry created successfully');    
+}
+
 
     public function edit($id){
-        $permission = Permission::findOrFail($id);
-        return view('permission.edit', [
-            'permission' => $permission
+        $attendance = CheckinCheckout::findOrFail($id);
+        $users = User::latest()->get();
+        return view('attendance.edit', [
+            'users' => $users,
+            'attendance' => $attendance
         ]);
     }    
 
     public function update(Request $request, $id){
-        $permission = Permission::findOrFail($id);
+        $attendance = CheckinCheckout::findOrFail($id);
         $formData = $request->validate([
-            'name' => ['required', 'max:255', 'min:3', Rule::unique('permissions', 'name')]
-        ]);
+            'user_id' => ['required', 'exists:users,id'],
+            'checkin_time' => ['required', 'date_format:H:i:s'],
+            'checkout_time' => ['nullable', 'date_format:H:i:s', 'after:checkin_time'],
+        ]);    
 
-        $permission->update($formData);
+        $attendance->update($formData);
 
-        return redirect('/permission')->with('success', $permission->name . 'Permission created: successfully');    
+        return redirect('/attendance')->with('success', 'Check-in checkout entry edited  successfully');    
     }
 
     public function delete($id){
-        $permission = Permission::findOrFail($id);
-        $permission->delete();
+        $attendance = CheckinCheckout::findOrFail($id);
+        $attendance->delete();
 
-        return redirect('/permission');  
+        return redirect('/attendance');  
     }
 
 }

@@ -8,6 +8,7 @@ use App\Models\CompanySetting;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -94,7 +95,7 @@ class DatabaseSeeder extends Seeder
         $adminRole = Role::where('name', 'Admin')->first();
         $adminRole->syncPermissions($permissions);
         User::factory()->count(10)->create();
-        User::factory()->create(['name' => 'hradmin', 'email' => 'admin@gmail.com', 'password' => 'admin@gmail.com'])->syncRoles($adminRole);
+        User::factory()->create(['name' => 'hradmin', 'email' => 'admin@gmail.com', 'password' => 'admin@gmail.com', 'pin_code' => Hash::make('123456')])->syncRoles($adminRole);
         
         if (CompanySetting::count() === 0) {
             CompanySetting::create([

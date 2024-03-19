@@ -1,4 +1,4 @@
-@props(['name', 'value' => '', 'options' => [], 'label'])
+@props(['name', 'value' => '', 'options' => [], 'label', 'title' => 'title'])
 
 <x-form.inputWrapper>
     <select
@@ -10,7 +10,7 @@
         @if(is_object($options[0])) {{-- Check if options are dynamic --}}
             @foreach ($options as $option)
                 <option value="{{ $option->id }}" {{ old($name, $value) == $option->id ? 'selected' : '' }}>
-                    {{ $option->title }}
+                    {{ $option[$title] }}
                 </option>
             @endforeach
         @else {{-- Options are hardcoded --}}
