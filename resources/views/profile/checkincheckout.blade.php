@@ -19,7 +19,7 @@
         <div class="flex items-start justify-between w-full">
             <div>
                 <h2 class="mb-5 text-sm font-bold text-gray-600 md:text-lg lg:text-xl">Scan QR Code</h2>
-                {!! QrCode::size(200)->generate('https://google.com') !!}
+                {!! QrCode::size(200)->generate($hash_value) !!}
             </div>
             <div class="flex flex-col justify-between h-full">
                 <h2 class="mb-5 text-sm font-bold text-gray-600 md:text-lg lg:text-xl">Enter your PIN number</h2>

@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/checkincheckout', [ScannerController::class, 'checkin']);//checkin page
     Route::post('/checkincheckout', [ScannerController::class, 'checkPinCode']);//validate checkin
     Route::get('/qrscanner', [ScannerController::class, 'qrscanner']);//qr scanner
+    Route::post('/qrscannerValid', [ScannerController::class, 'qrStore']);//qr scanner
 
     //company setting page
     Route::resource('company_setting', CompanySettingController::class)->middleware('permission:view company_setting');//company_setting table

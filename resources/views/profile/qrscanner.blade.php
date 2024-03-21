@@ -27,11 +27,10 @@
         </section>
     </main>
 </x-layout>
-<!-- qr-scanner-->
 <script type="module">
     // do something with QrScanner
 </script>
-<script src="storage/qr-scanner.umd.min.js"></script>
+<script src="/storage/qr-scanner.umd.min.js"></script>
 <script>
     $(document).ready(function(){
         var videoElem = document.getElementById('video');
@@ -39,6 +38,29 @@
             console.log(result);
             if(result){
                 qrScanner.stop();
+                $.ajax({
+                url: '/qrscannerValid/',
+                data: {"hash_value": result},
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    $('#myModal').hide();
+                    toastr.success( response.message);
+                    console.log(response);
+                    setTimeout(function(){
+                        // window.location.href = '/employee/';
+                    }, 1000);
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = JSON.parse(xhr.responseText).message;
+                    toastr.error(errorMessage);
+                    setTimeout(function(){
+                        // window.location.href = '/employee/';
+                    }, 1000);
+                }
+            });
             }
         });
         $('#scanQrButton').click(function(){

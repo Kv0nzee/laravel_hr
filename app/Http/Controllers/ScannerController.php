@@ -10,8 +10,10 @@ class ScannerController extends Controller
 {
     public function checkin(){
         $user = auth()->user();
+        $hash_value = Hash::make(date('Y-m-d'));
         return view('profile.checkincheckout', [
-            'user'=> $user
+            'user'=> $user,
+            'hash_value'=> $hash_value
         ]);
     }
 
@@ -57,5 +59,40 @@ class ScannerController extends Controller
 
     public function qrscanner(){
         return view('profile.qrscanner');
+    }
+
+    public function qrStore(Request $request){
+        if(!Hash::check(date('Y-m-d'), $request->hash_value)){
+            return [
+                'status' => 'fail',
+                'message'=> 'QR code is invalid'
+            ];
+        }
+
+        $user = auth()->user();
+        $user_id = $user->id;
+        $existingEntry = CheckinCheckout::where('user_id', $user_id)
+            ->whereDate('date', now()->format('Y-m-d'))
+            ->first();
+        if ($existingEntry?->checkin_time && $existingEntry?->checkout_time) {
+            return response()->json(['success' => false, 'message' => 'User already checked out at ' . $existingEntry->checkout_time], 422);
+        } else {
+            $existingCheckIn = CheckinCheckout::where('user_id', $user_id)
+                ->whereDate('date', now()->format('Y-m-d'))
+                ->whereNotNull('checkin_time')
+                ->first();
+            if ($existingCheckIn) {
+                $existingCheckIn->update(['checkout_time' => now()->format('H:i:s')]);
+                return response()->json(['success' => true, 'message' => 'Checked out successfully at ' . now()->format('H:i:s')], 200);
+            } else {
+                CheckinCheckout::create([
+                    'user_id' => $user_id,
+                    'checkin_time' => now()->format('H:i:s'),
+                    'date' => now()->format('Y-m-d')
+                ]);
+                return response()->json(['success' => true, 'message' => 'Checked in successfully at ' . now()->format('H:i:s')], 200);
+            }
+        }
+
     }
 }
