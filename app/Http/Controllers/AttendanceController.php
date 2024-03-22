@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\CheckinCheckout;
+use App\Models\CompanySetting;
 use App\Models\User;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
@@ -109,6 +111,28 @@ class AttendanceController extends Controller
         $attendance->delete();
 
         return redirect('/attendance');  
+    }
+
+    public function overview(){
+
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+        $currentDate = Carbon::now();
+        $startDate = $currentDate->copy()->startOfMonth();
+        $endDate = $currentDate->copy()->endOfMonth();
+
+        $periods = new CarbonPeriod($startDate, $endDate);
+        $employees = User::orderBy('employee_id')->get();
+        $companySetting = CompanySetting::findOrFail(1);
+        $attendances = CheckinCheckout::whereMonth('date', $currentMonth)
+                        ->whereYear('date', $currentYear)
+                        ->get();
+        return view('attendance.overview', [
+            'periods'=> $periods,
+            'employees'=>$employees,
+            'attendances'=>$attendances,
+            'companySetting'=>$companySetting
+        ]);
     }
 
 }

@@ -4,9 +4,12 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\CheckinCheckout;
 use App\Models\CompanySetting;
 use App\Models\Department;
 use App\Models\User;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
@@ -70,6 +73,7 @@ class DatabaseSeeder extends Seeder
             //Attendance 
             // Permission
             ['name' => 'create attendance', 'guard_name' => 'web'],
+            ['name' =>'attendance overview', 'guard_name'=>'web'],
             ['name' => 'view attendance', 'guard_name' => 'web'],
             ['name' => 'edit attendance', 'guard_name' => 'web'],
             ['name' => 'delete attendance', 'guard_name' => 'web'],
@@ -94,8 +98,8 @@ class DatabaseSeeder extends Seeder
         $permissions = Permission::pluck('id')->all();
         $adminRole = Role::where('name', 'Admin')->first();
         $adminRole->syncPermissions($permissions);
-        User::factory()->count(10)->create();
         User::factory()->create(['name' => 'hradmin', 'email' => 'admin@gmail.com', 'password' => 'admin@gmail.com', 'pin_code' => Hash::make('123456')])->syncRoles($adminRole);
+        User::factory()->count(10)->create();
         
         if (CompanySetting::count() === 0) {
             CompanySetting::create([
@@ -108,6 +112,22 @@ class DatabaseSeeder extends Seeder
                 'break_start_time' => '12:00:00', 
                 'break_end_time' => '13:00:00'
             ]);
+        }
+
+        $users = User::all();
+        foreach($users as $user){
+            $currentDate = Carbon::now();
+            $startDate = $currentDate->copy()->startOfMonth();
+            $endDate = $currentDate->copy()->endOfMonth();
+            $periods = new CarbonPeriod($startDate, $endDate);
+            foreach($periods as $period){
+                CheckinCheckout::create([
+                    'user_id' => $user->id,
+                    'date' => $period->format('Y-m-d'),
+                    'checkin_time' =>  Carbon::createFromTime(8, 30, 0)->addMinutes(rand(1, 60)),
+                    'checkout_time' => Carbon::createFromTime(16, 30, 0)->addMinutes(rand(1,60))
+                ]);
+            }
         }
     }
 }

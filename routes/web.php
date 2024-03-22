@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function(){
     Route::delete('/permission/{id}/delete', [PermissionController::class, 'delete'])->middleware('permission:delete permissions');  // delete role
 
     //attendance page
+    Route::get('attendanceOverview', [AttendanceController::class, 'overview'])->middleware('permission:attendance overview');//attendance overview table
     Route::resource('attendance', AttendanceController::class)->middleware('permission:view attendance');//attendance table
     Route::get('attendance/create', [AttendanceController::class, 'createView'])->middleware('permission:create attendance');//create attendance
     Route::post('attendance/create', [AttendanceController::class, 'store'])->middleware('permission:create attendance');//store attendance

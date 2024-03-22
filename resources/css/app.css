@@ -82,3 +82,31 @@ mark{
     outline: none;
     border: none !important;
   }
+
+  
+  div.dt-container .dt-paging .dt-paging-button a{
+    border: none;
+    border-radius: 10px;
+    color: #1F2937;
+}
+
+div.dt-container .dt-paging .dt-paging-button:hover a{
+    background-color: #1F2937;
+    color: #CBD5E0;
+}
+
+div.dt-container .dt-paging .active a {
+    background-color: #111827;
+    color: #CBD5E0;
+}
+
+div.dt-container .dt-paging .dt-paging-button:hover {
+      background: none !important;
+      border: none !important;
+}
+
+div.dt-container .dt-paging .pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

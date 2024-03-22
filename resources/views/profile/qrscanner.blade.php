@@ -50,15 +50,14 @@
                     toastr.success( response.message);
                     console.log(response);
                     setTimeout(function(){
-                        // window.location.href = '/employee/';
+                        window.location.href = '/';
                     }, 1000);
                 },
                 error: function(xhr, status, error) {
                     var errorMessage = JSON.parse(xhr.responseText).message;
                     toastr.error(errorMessage);
-                    setTimeout(function(){
-                        // window.location.href = '/employee/';
-                    }, 1000);
+                    $('#myModal').hide();
+
                 }
             });
             }
