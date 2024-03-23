@@ -113,26 +113,27 @@ class AttendanceController extends Controller
         return redirect('/attendance');  
     }
 
-    public function overview(){
-
-        $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
-        $currentDate = Carbon::now();
-        $startDate = $currentDate->copy()->startOfMonth();
-        $endDate = $currentDate->copy()->endOfMonth();
-
+    public function overview(Request $request){
+        $selectedYear = $request->year ?? Carbon::now()->year;
+        $selectedMonth = $request->month ?? Carbon::now()->month;
+    
+        $startDate = Carbon::createFromDate($selectedYear, $selectedMonth, 1)->startOfMonth();
+        $endDate = Carbon::createFromDate($selectedYear, $selectedMonth, 1)->endOfMonth();
+    
         $periods = new CarbonPeriod($startDate, $endDate);
         $employees = User::orderBy('employee_id')->get();
         $companySetting = CompanySetting::findOrFail(1);
-        $attendances = CheckinCheckout::whereMonth('date', $currentMonth)
-                        ->whereYear('date', $currentYear)
+        $attendances = CheckinCheckout::whereMonth('date', $selectedMonth)
+                        ->whereYear('date', $selectedYear)
                         ->get();
         return view('attendance.overview', [
             'periods'=> $periods,
             'employees'=>$employees,
             'attendances'=>$attendances,
-            'companySetting'=>$companySetting
+            'companySetting'=>$companySetting,
+            'selectedYear'=>$selectedYear,
+            'selectedMonth'=>$selectedMonth
         ]);
     }
-
+    
 }

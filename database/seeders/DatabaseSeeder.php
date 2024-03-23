@@ -99,7 +99,7 @@ class DatabaseSeeder extends Seeder
         $adminRole = Role::where('name', 'Admin')->first();
         $adminRole->syncPermissions($permissions);
         User::factory()->create(['name' => 'hradmin', 'email' => 'admin@gmail.com', 'password' => 'admin@gmail.com', 'pin_code' => Hash::make('123456')])->syncRoles($adminRole);
-        User::factory()->count(10)->create();
+        User::factory()->count(5)->create();
         
         if (CompanySetting::count() === 0) {
             CompanySetting::create([
@@ -117,7 +117,8 @@ class DatabaseSeeder extends Seeder
         $users = User::all();
         foreach($users as $user){
             $currentDate = Carbon::now();
-            $startDate = $currentDate->copy()->startOfMonth();
+            // $startDate = $currentDate->copy()->startOfMonth();
+            $startDate = $currentDate->copy()->subMonths(3)->startOfMonth();
             $endDate = $currentDate->copy()->endOfMonth();
             $periods = new CarbonPeriod($startDate, $endDate);
             foreach($periods as $period){

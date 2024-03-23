@@ -121,12 +121,21 @@
             </a>
          </li>
          @endcan
+         @can('attendance overview')
+         <li>
+            <a href="/attendanceOverview" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('department*') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
+               <span class="sr-only"> Attendance Overview</span>
+               <i class="mr-3 text-lg bi bi-binoculars-fill"></i>
+               Attendance Overview
+            </a>
+         </li>
+         @endcan
          @can('view attendance')
          <li>
             <a href="/attendance" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('department*') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
-               <span class="sr-only">attendance</span>
+               <span class="sr-only">Attendance</span>
                <i class="mr-3 text-lg bi bi-building-check"></i>
-               attendance
+               Attendance
             </a>
          </li>
          @endcan
