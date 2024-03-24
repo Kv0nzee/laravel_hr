@@ -113,27 +113,35 @@ class AttendanceController extends Controller
         return redirect('/attendance');  
     }
 
-    public function overview(Request $request){
-        $selectedYear = $request->year ?? Carbon::now()->year;
-        $selectedMonth = $request->month ?? Carbon::now()->month;
-    
-        $startDate = Carbon::createFromDate($selectedYear, $selectedMonth, 1)->startOfMonth();
-        $endDate = Carbon::createFromDate($selectedYear, $selectedMonth, 1)->endOfMonth();
-    
-        $periods = new CarbonPeriod($startDate, $endDate);
-        $employees = User::orderBy('employee_id')->get();
-        $companySetting = CompanySetting::findOrFail(1);
-        $attendances = CheckinCheckout::whereMonth('date', $selectedMonth)
-                        ->whereYear('date', $selectedYear)
-                        ->get();
+    public function overview()
+    {
+        $selectedYear = Carbon::now()->year;
+        $selectedMonth = Carbon::now()->month;
         return view('attendance.overview', [
-            'periods'=> $periods,
-            'employees'=>$employees,
-            'attendances'=>$attendances,
-            'companySetting'=>$companySetting,
-            'selectedYear'=>$selectedYear,
-            'selectedMonth'=>$selectedMonth
+            'selectedYear' => $selectedYear,
+            'selectedMonth' => $selectedMonth
         ]);
     }
-    
+
+    public function overviewTable(Request $request)
+    {
+        $selectedYear = $request->year ?? Carbon::now()->year;
+        $selectedMonth = $request->month ?? Carbon::now()->month;
+        $employees = User::orderBy('employee_id')->get();
+        $companySetting = CompanySetting::findOrFail(1);
+
+        $startDate = Carbon::createFromDate($selectedYear, $selectedMonth, 1)->startOfMonth();
+        $endDate = Carbon::createFromDate($selectedYear, $selectedMonth, 1)->endOfMonth();
+
+        $periods = new CarbonPeriod($startDate, $endDate);
+        $attendances = CheckinCheckout::whereMonth('date', $selectedMonth)
+            ->whereYear('date', $selectedYear)
+            ->get();
+        return view('components.attendanceOverviewtable', [
+            'employees' => $employees,
+            'companySetting' => $companySetting,
+            'periods' => $periods,
+            'attendances' => $attendances
+        ]);
+    }
 }

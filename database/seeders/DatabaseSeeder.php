@@ -125,8 +125,8 @@ class DatabaseSeeder extends Seeder
                 CheckinCheckout::create([
                     'user_id' => $user->id,
                     'date' => $period->format('Y-m-d'),
-                    'checkin_time' =>  Carbon::createFromTime(8, 30, 0)->addMinutes(rand(1, 60)),
-                    'checkout_time' => Carbon::createFromTime(16, 30, 0)->addMinutes(rand(1,60))
+                    'checkin_time' =>  Carbon::createFromTime(8, 30, 0)->addMinutes(rand(1, 45)),
+                    'checkout_time' => Carbon::createFromTime(16, 30, 0)->addMinutes(rand(1,45))
                 ]);
             }
         }
