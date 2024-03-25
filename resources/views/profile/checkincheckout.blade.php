@@ -20,6 +20,15 @@
             <div>
                 <h2 class="mb-5 text-sm font-bold text-gray-600 md:text-lg lg:text-xl">Scan QR Code</h2>
                 {!! QrCode::size(200)->generate($hash_value) !!}
+                <form action="/qrscanner" method="GET">
+                    @csrf
+                    <button type="submit" class="flex items-center px-4 py-2 mt-5 text-sm text-left transition-all bg-gray-600 rounded-lg text-neutral-100 hover:bg-gray-900 ">
+                        <p>Go to the scan page</p>  
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                    </button>
+                </form> 
             </div>
             <div class="flex flex-col justify-between h-full">
                 <h2 class="mb-5 text-sm font-bold text-gray-600 md:text-lg lg:text-xl">Enter your PIN number</h2>

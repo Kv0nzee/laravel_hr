@@ -119,15 +119,17 @@ class DatabaseSeeder extends Seeder
             $currentDate = Carbon::now();
             // $startDate = $currentDate->copy()->startOfMonth();
             $startDate = $currentDate->copy()->subMonths(3)->startOfMonth();
-            $endDate = $currentDate->copy()->endOfMonth();
+            $endDate = $currentDate->copy()->subDay();
             $periods = new CarbonPeriod($startDate, $endDate);
             foreach($periods as $period){
-                CheckinCheckout::create([
-                    'user_id' => $user->id,
-                    'date' => $period->format('Y-m-d'),
-                    'checkin_time' =>  Carbon::createFromTime(8, 30, 0)->addMinutes(rand(1, 45)),
-                    'checkout_time' => Carbon::createFromTime(16, 30, 0)->addMinutes(rand(1,45))
-                ]);
+                if($period->format('D') != 'Sat' && $period->format('D') != 'Sun'){
+                    CheckinCheckout::create([
+                        'user_id' => $user->id,
+                        'date' => $period->format('Y-m-d'),
+                        'checkin_time' =>  Carbon::createFromTime(8, 30, 0)->addMinutes(rand(1, 45)),
+                        'checkout_time' => Carbon::createFromTime(16, 30, 0)->addMinutes(rand(1,45))
+                    ]);
+                }
             }
         }
     }

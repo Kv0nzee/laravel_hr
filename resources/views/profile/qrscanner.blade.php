@@ -2,7 +2,9 @@
     <x-slot name="title">
         Qr Scanner
     </x-slot>
-    <x-slot name="style">
+    <x-slot name="style">        
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Laravel Mix CSS -->
         @vite('resources/css/app.css')
     </x-slot>
@@ -25,6 +27,31 @@
                 </div>
             </div>
         </section>
+        <div class="mt-5">
+            <div class="flex flex-col items-start w-full">
+                <!-- Label for month and year selection -->
+                <label class="pb-1 font-bold duration-150 text-end text-md text-zinc-800 text-nowrap">Month and Year</label>
+                <!-- Input for selecting month and year -->
+                <input type="month" id="filter" name="filter" class="block px-6 pt-6 pb-1 text-gray-800 bg-transparent border-b-2 border-gray-800 appearance-none text-md focus:outline-none focus:ring-0 peer" value="{{ $selectedYear }}-{{ str_pad($selectedMonth, 2, '0', STR_PAD_LEFT) }}" />
+            </div>
+            <div id="overview" class="w-full overflow-hidden table-responsive"></div>
+        </div>
+        <div class="w-full overflow-hidden table-responsive">
+            <table id="datatable"  class="table w-full display table-bordered">
+                <thead>
+                    <tr>
+                        <th class="hidden no-sort no-search"></th>
+                        <th>Employee Name</th>
+                        <th>Date</th>
+                        <th>Check in Time</th>
+                        <th>Check out Time</th>
+                        <th class="hidden no-sort no-search" hidden>Updated At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </main>
 </x-layout>
 <script type="module">
@@ -72,5 +99,82 @@
             $('#myModal').hide();
             qrScanner.stop();
         });
+
+        var table = $('#datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '/attendanceDetail',
+                data: function (d) {
+                    d.year = $('#filter').val().split('-')[0];
+                    d.month = $('#filter').val().split('-')[1];
+                }
+            },
+            responsive: true,
+            columns: [
+                { data: 'plus-icon', name: 'plus-icon' }, 
+                { data: 'employee_name', name: 'employee_name' }, 
+                { data: 'date', name: 'date' }, 
+                { data: 'checkin_time', name: 'checkin_time' }, 
+                { data: 'checkout_time', name: 'checkout_time' }, 
+                { data: 'updated_at', name: 'updated_at' },
+            ],
+            order: [[7, "desc"]],
+            columnDefs:[
+                {
+                    "targets": "hidden",
+                    "visible": false
+                },
+                {
+                    "targets": [0],
+                    "class": "control",
+                },
+                {
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'no-search',
+                    "searchable": false
+                }
+            ]
+        });
+
+        $('#filter').change(function () {
+            updateTable();
+            table.ajax.reload();
+        });
+        function updateTable() {
+            var selectedDate = $('#filter').val();
+            var selectedYear = selectedDate ? selectedDate.split('-')[0] : 0;
+            var selectedMonth = selectedDate ? selectedDate.split('-')[1] : 0;
+
+            $.ajax({
+                url: "/employeeattendanceOverviewtable" + "?month=" + selectedMonth + "&year=" + selectedYear,
+                method: 'GET',
+                success: function (data) {
+                    $('#overview').html(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+        updateTable();
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var currentDate = new Date();
+        var currentYear = currentDate.getFullYear();;
+        var currentMonth = currentDate.getMonth() + 1;
+
+        // Set min attribute to five years ago
+        var fiveYearsAgo = (currentYear - 5) + '-' + (currentMonth < 10 ? '0' + currentMonth : currentMonth);
+        document.getElementById('filter').setAttribute('min', fiveYearsAgo);
+
+        // Set max attribute to the current month
+        var currentMonthFormatted = currentYear + '-' + (currentMonth < 10 ? '0' + currentMonth : currentMonth);
+        document.getElementById('filter').setAttribute('max', currentMonthFormatted);
+
     });
 </script>

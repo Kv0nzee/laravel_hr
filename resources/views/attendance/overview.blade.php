@@ -17,7 +17,7 @@
             <!-- Label for month and year selection -->
             <label class="pb-1 font-bold duration-150 text-end text-md text-zinc-800 text-nowrap">Month and Year</label>
             <!-- Input for selecting month and year -->
-            <input type="month" id="filter" name="filter" class="block w-full px-6 pt-6 pb-1 text-gray-800 bg-transparent border-b-2 border-gray-800 appearance-none text-md focus:outline-none focus:ring-0 peer" value="{{ $selectedYear }}-{{ str_pad($selectedMonth, 2, '0', STR_PAD_LEFT) }}" />
+            <input type="month" id="filter" name="filter" class="block px-6 pt-6 pb-1 text-gray-800 bg-transparent border-b-2 border-gray-800 appearance-none text-md focus:outline-none focus:ring-0 peer" value="{{ $selectedYear }}-{{ str_pad($selectedMonth, 2, '0', STR_PAD_LEFT) }}" />
         </div>
         <div id="overview" class="w-full overflow-hidden table-responsive"></div>
     </div>
@@ -50,27 +50,6 @@
 
     });
     
-
-    table = $('#myTable').DataTable({
-        scrollY: '60vh',
-        scrollX: true,
-        fixedHeader: true,
-        columnDefs: [
-            {
-                "targets": "hidden",
-                "visible": false
-            },
-            {
-                "targets": 'no-sort',
-                "orderable": false
-            },
-            {
-                "targets": 'no-search',
-                "searchable": false
-            }
-        ]
-    });
-
     document.addEventListener("DOMContentLoaded", function () {
         var currentDate = new Date();
         var currentYear = currentDate.getFullYear();;

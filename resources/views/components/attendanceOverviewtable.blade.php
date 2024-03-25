@@ -6,7 +6,7 @@
                 <th class="text-nowrap">Employee Name</th>
                 <!-- Table headers for each day of the selected month -->
                 @foreach ($periods as $period)
-                    <th class="no-sort">{{$period->format('d')}}</th>
+                    <th class="no-sort @if($period->format('D') == 'Sat' || $period->format('D') == 'Sun') alert alert-danger @endif">{{$period->format('d')}}</th>
                 @endforeach
             </tr>
         </thead>
@@ -24,8 +24,11 @@
                         // Retrieve attendance data for the current employee and day
                         $attendance = collect($attendances)->where('user_id', $employee->id)->where('date', $period->format('Y-m-d'))->first();
                         // Determine checkin and checkout icons based on attendance data
-                        if ($attendance) {
-                            if ($attendance->checkin_time < $companySetting->office_start_time) {
+                        if ($period->format('Y-m-d') <= now()->toDateString()){
+                            if(!$attendance){
+                                $checkin_icon = '<i class="w-5 h-5 bi bi-dash-circle-fill text-warning"></i>';
+                            }
+                            else if ($attendance->checkin_time < $companySetting->office_start_time) {
                                 $checkin_icon = '<i class="w-5 h-5 bi bi-check-circle-fill text-success"></i>';
                             } else if ($attendance->checkin_time > $companySetting->office_start_time && $attendance->checkin_time < $companySetting->break_start_time) {
                                 $checkin_icon = '<i class="w-5 h-5 bi bi-check-circle-fill text-warning"></i>';
@@ -33,7 +36,10 @@
                                 $checkin_icon = '<i class="w-5 h-5 bi bi-check-circle-fill text-danger"></i>';
                             }
 
-                            if ($attendance->checkout_time < $companySetting->break_end_time) {
+                            if(!$attendance){
+                                $checkout_icon = '<i class="w-5 h-5 bi bi-dash-circle-fill text-warning"></i>';
+                            }
+                            else if ($attendance->checkout_time < $companySetting->break_end_time) {
                                 $checkout_icon = '<i class="w-5 h-5 bi bi-check-circle-fill text-danger"></i>';
                             } else if ($attendance->checkout_time < $companySetting->office_end_time) {
                                 $checkout_icon = '<i class="w-5 h-5 bi bi-check-circle-fill text-warning"></i>';
@@ -58,7 +64,6 @@
     
 
     table = $('#myTable').DataTable({
-        scrollY: '60vh',
         scrollX: true,
         fixedHeader: true,
         columnDefs: [

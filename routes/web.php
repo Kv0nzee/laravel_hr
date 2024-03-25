@@ -76,6 +76,8 @@ Route::middleware('auth')->group(function(){
     Route::get('attendanceOverview', [AttendanceController::class, 'overview'])->middleware('permission:attendance overview');//employees attendacne overview
     Route::get('attendanceOverviewtable/{year?}/{month?}', [AttendanceController::class, 'overviewTable'])->middleware('permission:attendance overview');//employees attendacne overview
     Route::resource('attendance', AttendanceController::class)->middleware('permission:view attendance');//attendance table
+    Route::get('/attendanceDetail/{year?}/{month?}', [AttendanceController::class, 'show'])->middleware('permission:view attendance');  // attendance by employee name
+    Route::get('/employeeattendanceOverviewtable/{year?}/{month?}', [ScannerController::class, 'qrscannerDetailOverview']); //employee attendacne overview table
     Route::get('attendance/create', [AttendanceController::class, 'createView'])->middleware('permission:create attendance');//create attendance
     Route::post('attendance/create', [AttendanceController::class, 'store'])->middleware('permission:create attendance');//store attendance
     Route::get('/attendance/{id}/edit', [AttendanceController::class, 'edit'])->middleware('permission:edit attendance');  // edit attendance

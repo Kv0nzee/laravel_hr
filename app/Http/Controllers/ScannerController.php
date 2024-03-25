@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\CheckinCheckout;
+use App\Models\CompanySetting;
+use App\Models\User;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,6 +26,10 @@ class ScannerController extends Controller
         $validatedData = $request->validate([
             'code' => 'required|string|min:6|max:6',
         ]);
+
+        if (now()->format('D') == "Sat" || now()->format('D') =="Sun") {
+            return response()->json(['success' => false, 'message' => 'Today is off day. ' ], 422);
+        }
 
         $user = auth()->user();
         $userPinCode = $user->pin_code;
@@ -58,10 +66,42 @@ class ScannerController extends Controller
     }
 
     public function qrscanner(){
-        return view('profile.qrscanner');
+        $selectedYear = Carbon::now()->year;
+        $selectedMonth = Carbon::now()->month;
+        
+        return view('profile.qrscanner', [
+            'selectedYear' => $selectedYear,
+            'selectedMonth' => $selectedMonth
+        ]);
+    }
+
+    public function qrscannerDetailOverview(Request $request){
+        $selectedYear = $request->year ?? Carbon::now()->year;
+        $selectedMonth = $request->month ?? Carbon::now()->month;
+        $employee = User::where('id', auth()->user()->id)->get();
+        $companySetting = CompanySetting::findOrFail(1);
+
+        $startDate = Carbon::createFromDate($selectedYear, $selectedMonth, 1)->startOfMonth();
+        $endDate = Carbon::createFromDate($selectedYear, $selectedMonth, 1)->endOfMonth();
+
+        $periods = new CarbonPeriod($startDate, $endDate);
+        $attendances = CheckinCheckout::whereMonth('date', $selectedMonth)
+        ->whereYear('date', $selectedYear)
+        ->get();
+        return view('components.attendanceOverviewtable', [
+            'employees' => $employee,
+            'companySetting' => $companySetting,
+            'periods' => $periods,
+            'attendances' => $attendances
+        ]);
     }
 
     public function qrStore(Request $request){
+
+        if (now()->format('D') == "Sat" || now()->format('D') =="Sun") {
+            return response()->json(['success' => false, 'message' => 'Today is off day. ' ], 422);
+        }
+        
         if(!Hash::check(date('Y-m-d'), $request->hash_value)){
             return [
                 'status' => 'fail',

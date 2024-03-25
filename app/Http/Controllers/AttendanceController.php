@@ -55,6 +55,31 @@ class AttendanceController extends Controller
         return view('attendance.index');
     }
 
+
+    public function show(Request $request){
+        if(\request()->ajax()) {
+            $data = CheckinCheckout::with('employee')->where('user_id', auth()->user()->id)->whereYear('date', $request->year)->whereMonth('date', $request->month)->orderBy('date', 'DESC');;
+            return DataTables::of($data)
+                ->filterColumn('employee_name', function($query, $keyword){
+                    $query->whereHas('employee', function($query) use ($keyword) {
+                        $query->where('name', 'like', '%' .$keyword. '%');
+                    });
+                })
+                ->editColumn('updated_at', function($each){
+                    return Carbon::parse($each->updated_at)->format('Y-m-d H:i:s');
+                })
+                ->addColumn('employee_name', function($each){
+                    return $each->employee ? $each->employee->name : '-';
+                })    
+                ->addColumn('plus-icon', function($each){
+                    return '<i class="bi bi-plus"></i>';
+                })
+                ->rawColumns(['plus-icon'])
+                ->make(true);
+        }
+        return view('attendance.index');
+    }
+
     public function createView(){
         $users = User::latest()->get();
         return view('attendance.create', [
