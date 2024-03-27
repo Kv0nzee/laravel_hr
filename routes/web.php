@@ -7,6 +7,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\ScannerController;
 use App\Http\Controllers\UserController;
 use App\Models\CompanySetting;
@@ -71,6 +72,14 @@ Route::middleware('auth')->group(function(){
     Route::get('/permission/{id}/edit', [PermissionController::class, 'edit'])->middleware('permission:edit permissions');  // edit permission
     Route::patch('/permission/{id}/update', [PermissionController::class, 'update'])->middleware('permission:edit permissions');  // update permission
     Route::delete('/permission/{id}/delete', [PermissionController::class, 'delete'])->middleware('permission:delete permissions');  // delete role
+
+    //salary page
+    Route::resource('salary', SalaryController::class)->middleware('permission:view salary');//salary table
+    Route::get('salary/create', [SalaryController::class, 'createView'])->middleware('permission:create salary');//create salary
+    Route::post('salary/create', [SalaryController::class, 'store'])->middleware('permission:create salary');//store salary
+    Route::get('/salary/{id}/edit', [SalaryController::class, 'edit'])->middleware('permission:edit salary');  // edit salary
+    Route::patch('/salary/{id}/update', [SalaryController::class, 'update'])->middleware('permission:edit salary');  // update salary
+    Route::delete('/salary/{id}/delete', [SalaryController::class, 'delete'])->middleware('permission:delete salary');  // delete salary
 
     //attendance page
     Route::get('attendanceOverview', [AttendanceController::class, 'overview'])->middleware('permission:attendance overview');//employees attendacne overview

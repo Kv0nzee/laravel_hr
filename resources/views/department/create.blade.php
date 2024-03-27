@@ -8,7 +8,7 @@
     </x-slot>    
     <form method="POST" id="departmentCreate" class="flex flex-col items-start justify-center w-full gap-6 px-5 mx-auto *:lg:px-16 md:px-10">
         @csrf
-        <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Create Employee</h1>
+        <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Create Department</h1>
         <div class="w-full md:flex md:gap-x-5">
             <x-form.input label="Title" name="title" />
         </div>

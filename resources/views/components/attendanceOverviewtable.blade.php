@@ -6,7 +6,7 @@
                 <th class="text-nowrap">Employee Name</th>
                 <!-- Table headers for each day of the selected month -->
                 @foreach ($periods as $period)
-                    <th class="no-sort @if($period->format('D') == 'Sat' || $period->format('D') == 'Sun') alert alert-danger @endif">{{$period->format('d')}}</th>
+                    <th class="no-sort text-center @if($period->format('D') == 'Sat' || $period->format('D') == 'Sun') alert alert-danger @endif">{{$period->format('d')}} <br/> {{$period->format('D')}}</th>
                 @endforeach
             </tr>
         </thead>

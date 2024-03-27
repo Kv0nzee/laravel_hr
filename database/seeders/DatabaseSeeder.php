@@ -70,8 +70,13 @@ class DatabaseSeeder extends Seeder
             ['name' => 'edit permissions', 'guard_name' => 'web'],
             ['name' => 'delete permissions', 'guard_name' => 'web'],
 
-            //Attendance 
-            // Permission
+             // salary
+             ['name' => 'create salary', 'guard_name' => 'web'],
+             ['name' => 'view salary', 'guard_name' => 'web'],
+             ['name' => 'edit salary', 'guard_name' => 'web'],
+             ['name' => 'delete salary', 'guard_name' => 'web'],
+            
+             //Attendance 
             ['name' => 'create attendance', 'guard_name' => 'web'],
             ['name' =>'attendance overview', 'guard_name'=>'web'],
             ['name' => 'view attendance', 'guard_name' => 'web'],
