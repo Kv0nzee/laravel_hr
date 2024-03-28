@@ -82,6 +82,9 @@ class DatabaseSeeder extends Seeder
             ['name' => 'view attendance', 'guard_name' => 'web'],
             ['name' => 'edit attendance', 'guard_name' => 'web'],
             ['name' => 'delete attendance', 'guard_name' => 'web'],
+
+            //payroll
+            ['name' => 'view payroll', 'guard_name' => 'web']
         ]);
 
         Role::insert([

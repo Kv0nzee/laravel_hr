@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthUserController;
 use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalaryController;
@@ -80,6 +81,11 @@ Route::middleware('auth')->group(function(){
     Route::get('/salary/{id}/edit', [SalaryController::class, 'edit'])->middleware('permission:edit salary');  // edit salary
     Route::patch('/salary/{id}/update', [SalaryController::class, 'update'])->middleware('permission:edit salary');  // update salary
     Route::delete('/salary/{id}/delete', [SalaryController::class, 'delete'])->middleware('permission:delete salary');  // delete salary
+
+    //Payroll Page
+    Route::get('payroll', [PayrollController::class, 'payroll'])->middleware('permission:view payroll');//employees payroll overview
+    Route::get('payrolltable/{year?}/{month?}', [PayrollController::class, 'payrollTable'])->middleware('permission:view payroll');//employees payroll overview
+
 
     //attendance page
     Route::get('attendanceOverview', [AttendanceController::class, 'overview'])->middleware('permission:attendance overview');//employees attendacne overview

@@ -111,3 +111,12 @@ div.dt-container .dt-paging .pagination{
     align-items: center;
 }
 
+.element-with-scrollbar {
+    overflow: hidden;
+}
+
+/* Hide scrollbar for Webkit browsers (Chrome, Safari, etc.) */
+/* Note: This may not work in future versions of Webkit browsers */
+.element-with-scrollbar::-webkit-scrollbar {
+    display: none;
+}

@@ -21,6 +21,9 @@ class SalaryController extends Controller
                         $query->where('name', 'like', '%' .$keyword. '%');
                     });
                 })
+                ->editColumn('amount', function($each){
+                    return number_format($each->amount);
+                })
                 ->editColumn('updated_at', function($each){
                     return Carbon::parse($each->updated_at)->format('Y-m-d H:i:s');
                 })
