@@ -36,6 +36,9 @@
                   <a href="/checkincheckout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Checkin Checkout</a>
                </li>
                <li>
+                  <a href="/qrscanner" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">QR Sacnner</a>
+               </li>
+               <li>
                   <a href="#" class="block px-4 py-2 text-sm text-gray-700 signout hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">SignOut</a>
                </li>
                {{-- <li>
@@ -62,7 +65,7 @@
   </div>
 </nav>
 
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200  md:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
    <div class="h-full px-3 pb-4 overflow-y-auto element-with-scrollbar dark:bg-gray-800">
       <ul class="space-y-2 font-medium ">
          <li>
@@ -145,6 +148,15 @@
                <span class="sr-only">Salary</span>
                <i class="mr-3 text-lg bi bi-cash"></i>
                Salary
+            </a>
+         </li>
+         @endcan
+         @can('view payroll')
+         <li>
+            <a href="/payroll" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('company_setting*') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
+               <span class="sr-only">Payroll</span>
+               <i class="mr-3 text-lg bi bi-bank2"></i>
+               Payroll
             </a>
          </li>
          @endcan

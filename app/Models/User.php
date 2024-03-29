@@ -57,4 +57,8 @@ class User extends Authenticatable implements WebAuthnAuthenticatable
     public function checkin_checkout(){
         return $this->hasMany(CheckinCheckout::class);
     }
+
+    public function salaries(){
+        return $this->hasMany(Salary::class, 'user_id', 'id');
+    }
 }

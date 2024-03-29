@@ -12,7 +12,7 @@
     </x-slot>
     <div class="mt-5">
         <!-- Page heading -->
-        <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Attendance Overview</h1>
+        <h1 class="font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Payroll Overview</h1>
         <div class="flex flex-col items-start w-full">
             <!-- Label for month and year selection -->
             <label class="pb-1 font-bold duration-150 text-end text-md text-zinc-800 text-nowrap">Month and Year</label>

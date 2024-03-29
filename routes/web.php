@@ -85,6 +85,7 @@ Route::middleware('auth')->group(function(){
     //Payroll Page
     Route::get('payroll', [PayrollController::class, 'payroll'])->middleware('permission:view payroll');//employees payroll overview
     Route::get('payrolltable/{year?}/{month?}', [PayrollController::class, 'payrollTable'])->middleware('permission:view payroll');//employees payroll overview
+    Route::get('mypayroll/{year?}/{month?}', [PayrollController::class, 'myPayroll']);//user payroll overview
 
 
     //attendance page

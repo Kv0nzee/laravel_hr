@@ -10,6 +10,8 @@
                 <th class="text-nowrap">Off Day</th>
                 <th class="text-nowrap">Attendance Day</th>
                 <th class="text-nowrap">Leave Day</th>
+                <th class="text-nowrap">Per Day(MMK)</th>
+                <th class="text-nowrap">Total (MMK)</th>
             </tr>
         </thead>
         <tbody>
@@ -17,6 +19,9 @@
                 <tr>
                     @php
                         $attendanceCount = 0;
+                        $salary = collect($employee->salaries)->where('month', "{$selectedYear}-{$selectedMonth}")->first();
+                        $perday = $salary ? $salary->amount / $daysInMonth : 0;
+                        
                         foreach ($periods as $period) {
                             $attendance = collect($attendances)->where('user_id', $employee->id)->where('date', $period->format('Y-m-d'))->first();
                             
@@ -47,6 +52,7 @@
                             }
                         }
                         $leaveDays = $workingDays - $attendanceCount;
+                        $total = $perday ? round($perday * $attendanceCount) : 0;
                     @endphp
                     
                     <!-- Display employee name in the first column -->
@@ -84,7 +90,9 @@
                             }
                         @endphp
                         {{ $leaveDisplay }}
-                    </td>                    
+                    </td>                   
+                    <td>{{number_format($perday)}}</td> 
+                    <td>{{number_format($total)}}</td> 
                 </tr>
             @endforeach
         </tbody>

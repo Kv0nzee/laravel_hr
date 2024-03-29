@@ -34,7 +34,10 @@
                 <!-- Input for selecting month and year -->
                 <input type="month" id="filter" name="filter" class="block px-6 pt-6 pb-1 text-gray-800 bg-transparent border-b-2 border-gray-800 appearance-none text-md focus:outline-none focus:ring-0 peer" value="{{ $selectedYear }}-{{ str_pad($selectedMonth, 2, '0', STR_PAD_LEFT) }}" />
             </div>
-            <div id="overview" class="w-full overflow-hidden table-responsive"></div>
+            <h1 class="mt-5 font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Payroll Overview</h1>
+            <div id="payroll" class="w-full overflow-hidden table-responsive"></div>
+            <h1 class="mt-5 font-bold text-neutral-800 text-md md:text-2xl lg:text-3xl">Attendance Overview</h1>
+            <div id="attendance" class="w-full overflow-hidden table-responsive"></div>
         </div>
         <div class="w-full overflow-hidden table-responsive">
             <table id="datatable"  class="table w-full display table-bordered">
@@ -153,7 +156,18 @@
                 url: "/employeeattendanceOverviewtable" + "?month=" + selectedMonth + "&year=" + selectedYear,
                 method: 'GET',
                 success: function (data) {
-                    $('#overview').html(data);
+                    $('#attendance').html(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
+            $.ajax({
+                url: "/mypayroll" + "?month=" + selectedMonth + "&year=" + selectedYear,
+                method: 'GET',
+                success: function (data) {
+                    $('#payroll').html(data);
                 },
                 error: function (xhr, status, error) {
                     console.error(error);

@@ -68,17 +68,24 @@ class SalaryController extends Controller
     {
         $formData = $request->validate([
             'employee_names.*' => ['required', 'exists:users,id'], 
-            'month' => ['required', 'date_format:Y-m'],
+            'month' => [
+                'required',
+                'date_format:Y-m',
+                Rule::unique('salaries')->where(function ($query) use ($request) {
+                    return $query->where('month', $request->input('month'))
+                                 ->whereIn('user_id', $request->input('employee_names'));
+                }),
+            ],
             'amount' => ['required', 'numeric', 'min:100000'],
         ]);    
-
+    
         foreach ($formData['employee_names'] as $employeeId) {
             $salaryData = [
                 'user_id' => $employeeId,
                 'month' => $formData['month'],
                 'amount' => $formData['amount'],
             ];
-
+    
             Salary::create($salaryData);
         }
         
@@ -98,7 +105,14 @@ class SalaryController extends Controller
         $salary = Salary::findOrFail($id);
         $formData = $request->validate([
             'employee_names.*' => ['required', 'exists:users,id'], 
-            'month' => ['required', 'date_format:Y-m'],
+            'month' => [
+                'required',
+                'date_format:Y-m',
+                Rule::unique('salaries')->ignore($salary->id)->where(function ($query) use ($request) {
+                    return $query->where('month', $request->input('month'))
+                                 ->whereIn('user_id', $request->input('employee_names'));
+                }),
+            ],
             'amount' => ['required', 'numeric', 'min:100000'],
         ]);    
 
