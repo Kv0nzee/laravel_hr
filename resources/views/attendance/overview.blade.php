@@ -19,6 +19,24 @@
             <!-- Input for selecting month and year -->
             <input type="month" id="filter" name="filter" class="block px-6 pt-6 pb-1 text-gray-800 bg-transparent border-b-2 border-gray-800 appearance-none text-md focus:outline-none focus:ring-0 peer" value="{{ $selectedYear }}-{{ str_pad($selectedMonth, 2, '0', STR_PAD_LEFT) }}" />
         </div>
+        <div class="flex items-center justify-around px-5 py-3">
+            <div class="flex">
+                <i class="w-5 h-5 bi bi-check-circle-fill text-success"></i>
+                <label class="pb-1 font-bold duration-150 text-md text-emerald-600 text-nowrap">Presence</label>
+            </div>
+            <div class="flex">
+                <i class="w-5 h-5 bi bi-check-circle-fill text-warning"></i>
+                <label class="pb-1 font-bold text-yellow-600 duration-150 text-md text-nowrap">Late</label>
+            </div>
+            <div class="flex">
+                <i class="w-5 h-5 bi bi-check-circle-fill text-danger"></i>
+                <label class="pb-1 font-bold text-red-600 duration-150 text-md text-nowrap">Absent</label>
+            </div>
+            <div class="flex">
+                <i class="w-5 h-5 bi bi-dash-circle-fill text-warning"></i>
+                <label class="pb-1 font-bold text-yellow-600 duration-150 text-md text-nowrap">Off</label>
+            </div>
+        </div>
         <div id="overview" class="w-full overflow-hidden table-responsive"></div>
     </div>
 </x-layout>

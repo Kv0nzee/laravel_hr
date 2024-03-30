@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\CheckinCheckout;
 use App\Models\CompanySetting;
 use App\Models\Department;
+use App\Models\Salary;
 use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -136,6 +137,14 @@ class DatabaseSeeder extends Seeder
                         'date' => $period->format('Y-m-d'),
                         'checkin_time' =>  Carbon::createFromTime(8, 30, 0)->addMinutes(rand(1, 45)),
                         'checkout_time' => Carbon::createFromTime(16, 30, 0)->addMinutes(rand(1,45))
+                    ]);
+
+                    $salaryDate = $period->format('Y-m');
+                    $salaryAmount = rand(50000, 100000); 
+                    Salary::create([
+                        'user_id' => $user->id,
+                        'month' => $salaryDate,
+                        'amount' => $salaryAmount
                     ]);
                 }
             }
