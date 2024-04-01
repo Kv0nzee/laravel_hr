@@ -67,13 +67,15 @@
                     <td>{{$offDays}}</td>
                     <td>
                         @php
-                            $attendanceDisplay = '';
-                            if ($attendanceCount == 0.5) {
-                                $attendanceDisplay = 'Half';
-                            } elseif (($attendanceCount * 10) % floor($attendanceCount) != 0) {
-                                $attendanceDisplay = floor($attendanceCount) . 'days and half';
-                            } else {
-                                $attendanceDisplay = $attendanceCount;
+                            $attendanceDisplay = 0;
+                            if($attendanceCount){
+                                if ($attendanceCount == 0.5) {
+                                    $attendanceDisplay = 'Half';
+                                } elseif (($attendanceCount * 10) % floor($attendanceCount) != 0) {
+                                    $attendanceDisplay = floor($attendanceCount) . 'days and half';
+                                } else {
+                                    $attendanceDisplay = $attendanceCount;
+                                }
                             }
                         @endphp
                         {{ $attendanceDisplay }}
@@ -92,7 +94,7 @@
                         {{ $leaveDisplay }}
                     </td>                   
                     <td>{{number_format($perday)}}</td> 
-                    <td>{{number_format($total)}}</td> 
+                    <td>{{number_format($total )}}</td> 
                 </tr>
             @endforeach
         </tbody>

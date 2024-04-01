@@ -113,10 +113,12 @@ div.dt-container .dt-paging .pagination{
 
 .element-with-scrollbar {
     overflow: hidden;
+    
 }
 
 /* Hide scrollbar for Webkit browsers (Chrome, Safari, etc.) */
 /* Note: This may not work in future versions of Webkit browsers */
 .element-with-scrollbar::-webkit-scrollbar {
+    width: 0;
     display: none;
 }

@@ -66,7 +66,7 @@
 </nav>
 
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
-   <div class="h-full px-3 pb-4 overflow-y-auto element-with-scrollbar dark:bg-gray-800">
+   <div class="h-full px-3 pb-4 overflow-y-scroll element-with-scrollbar dark:bg-gray-800">
       <ul class="space-y-2 font-medium ">
          <li>
             <a href="/" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('/') || request()->is('profile*') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
@@ -126,7 +126,7 @@
          @endcan
          @can('attendance overview')
          <li>
-            <a href="/attendanceOverview" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('department*') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
+            <a href="/attendanceOverview" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('attendanceOverview') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
                <span class="sr-only"> Attendance Overview</span>
                <i class="mr-3 text-lg bi bi-binoculars-fill"></i>
                Attendance Overview
@@ -135,7 +135,7 @@
          @endcan
          @can('view attendance')
          <li>
-            <a href="/attendance" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('department*') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
+            <a href="/attendance" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('attendance') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
                <span class="sr-only">Attendance</span>
                <i class="mr-3 text-lg bi bi-building-check"></i>
                Attendance
@@ -144,7 +144,7 @@
          @endcan
          @can('view salary')
          <li>
-            <a href="/salary" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('company_setting*') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
+            <a href="/salary" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('salary*') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
                <span class="sr-only">Salary</span>
                <i class="mr-3 text-lg bi bi-cash"></i>
                Salary
@@ -153,7 +153,7 @@
          @endcan
          @can('view payroll')
          <li>
-            <a href="/payroll" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('company_setting*') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
+            <a href="/payroll" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('payroll*') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
                <span class="sr-only">Payroll</span>
                <i class="mr-3 text-lg bi bi-bank2"></i>
                Payroll

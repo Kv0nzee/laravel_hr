@@ -7,6 +7,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\ScannerController;
@@ -57,6 +58,14 @@ Route::middleware('auth')->group(function(){
     Route::get('/department/{id}/edit', [DepartmentController::class, 'edit'])->middleware('permission:edit departments');  // edit department
     Route::patch('/department/{id}/update', [DepartmentController::class, 'update'])->middleware('permission:edit departments');  // update department
     Route::delete('/department/{id}/delete', [DepartmentController::class, 'delete'])->middleware('permission:delete departments');  // delete department
+
+    //project page
+    Route::resource('project', ProjectController::class)->middleware('permission:view projects');//project table
+    Route::get('project/create', [ProjectController::class, 'createView'])->middleware('permission:create projects');//create project
+    Route::post('project/create', [ProjectController::class, 'store'])->middleware('permission:create projects');//store project
+    Route::get('/project/{id}/edit', [ProjectController::class, 'edit'])->middleware('permission:edit projects');  // edit project
+    Route::patch('/project/{id}/update', [ProjectController::class, 'update'])->middleware('permission:edit projects');  // update project
+    Route::delete('/project/{id}/delete', [ProjectController::class, 'delete'])->middleware('permission:delete projects');  // delete project
 
     //role page
     Route::resource('role', RoleController::class)->middleware('permission:view roles');//role table

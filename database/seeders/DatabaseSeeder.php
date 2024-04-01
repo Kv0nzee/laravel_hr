@@ -65,6 +65,12 @@ class DatabaseSeeder extends Seeder
             ['name' => 'edit departments', 'guard_name' => 'web'],
             ['name' => 'delete departments', 'guard_name' => 'web'],
 
+            // projects
+            ['name' => 'create projects', 'guard_name' => 'web'],
+            ['name' => 'view projects', 'guard_name' => 'web'],
+            ['name' => 'edit projects', 'guard_name' => 'web'],
+            ['name' => 'delete projects', 'guard_name' => 'web'],
+
             // Permission
             ['name' => 'create permissions', 'guard_name' => 'web'],
             ['name' => 'view permissions', 'guard_name' => 'web'],
