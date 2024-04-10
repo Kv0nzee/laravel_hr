@@ -19,8 +19,8 @@ return new class extends Migration
             $table->text('files')->nullable();
             $table->timestamp('start_date')->nullable();
             $table->timestamp('deadline')->nullable();
-            $table->enum('priority', ['high', 'middle', 'low']);
-            $table->enum('status', ['pending', 'in progress', 'complete']);
+            $table->enum('priority', ['High', 'Middle', 'Low']);
+            $table->enum('status', ['Pending', 'In Progress', 'Complete']);
             $table->timestamps();
         });
     }

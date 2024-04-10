@@ -25,7 +25,6 @@
                         <th class="hidden no-sort no-search"></th>
                         <th>Title</th>
                         <th>Description</th>
-                        <th>Files</th>
                         <th>start_date</th>
                         <th>deadline</th>
                         <th>priority</th>
@@ -52,8 +51,7 @@
                 { data: 'plus-icon', name: 'plus-icon' }, 
                 { data: 'images', name: 'images' }, 
                 { data: 'description', name: 'description' }, 
-                { data: 'files', name: 'files' }, 
-                { data: 'start_date ', name: 'start_date ' }, 
+                { data: 'start_date', name: 'start_date' }, 
                 { data: 'deadline', name: 'deadline' }, 
                 { data: 'priority', name: 'priority' }, 
                 { data: 'status', name: 'status' }, 
@@ -102,22 +100,22 @@
 
         function deletePost(id) {
             $.ajax({
-                url: '/department/' + id + '/delete/',
+                url: '/project/' + id + '/delete/',
                 data: {"id": id , _method: 'delete'},
                 type: "POST",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    toastr.success('Department deleted successfully');
+                    toastr.success('project deleted successfully');
                     setTimeout(function(){
-                        window.location.href = '/department/';
+                        window.location.href = '/project/';
                     }, 1000);
                 },
                 error: function(xhr, status, error) {
-                    toastr.error('Failed to delete Department');
+                    toastr.error('Failed to delete project');
                     setTimeout(function(){
-                        window.location.href = '/department/';
+                        window.location.href = '/project/';
                     }, 1000);
                 }
             });

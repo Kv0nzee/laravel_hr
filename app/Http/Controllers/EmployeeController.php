@@ -23,6 +23,9 @@ class EmployeeController extends Controller
                         $query->where('title', 'like', '%' .$keyword. '%');
                     });
                 })
+                ->filterColumn('profile_img', function($query, $keyword){
+                    $query->where('name', 'like', '%' .$keyword. '%');
+                })
                 ->addColumn('department_name', function($each){
                     return $each->department ? $each->department->title : '-';
                 })
