@@ -14,4 +14,11 @@ class Project extends Model
         'images' => 'array',
         'files' => 'array'
     ];
+
+    public function leaders(){
+        return $this->belongsToMany(User::class, 'project_leaders');
+    }
+    public function members(){
+        return $this->belongsToMany(User::class, 'project_members');
+    }
 }

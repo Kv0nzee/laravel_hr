@@ -160,6 +160,15 @@
             </a>
          </li>
          @endcan
+         @can('view projects')
+         <li>
+            <a href="/project" class="flex items-center px-4 py-2 text-gray-300 {{ request()->is('project*') ? 'bg-gray-600 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' }}">
+               <span class="sr-only">Payroll</span>
+               <i class="mr-3 text-lg bi bi-cast"></i>
+               Projects
+            </a>
+         </li>
+         @endcan
       </ul>
    </div>
 </aside>

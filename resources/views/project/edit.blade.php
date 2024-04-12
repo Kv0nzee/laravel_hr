@@ -20,6 +20,8 @@
             <div class="flex justify-start w-full gap-4" id="pdfPreviews"></div>
             <x-form.input label="Start Date" name="start_date" :value="$project->start_date" />
             <x-form.input label="Deadline" name="deadline" :value="$project->deadline" />
+            <x-form.inputMultiSelectUser label="Set Leaders" name="leaders[]" :options="$users" id="id" :value="$leaders" title="name" class="custom_select" multi="true" />
+            <x-form.inputMultiSelectUser label="Set Members" name="members[]" :options="$users" id="id" :value="$members" title="name" class="custom_select" multi="true" />
             <x-form.inputSelect label="Priority" name="priority" :options="['High', 'Middle', 'Low']" :value="$project->priority" />
             <x-form.inputSelect label="Status" name="status" :options="['Pending', 'In Progress', 'Complete']" :value="$project->status" />
         </div>

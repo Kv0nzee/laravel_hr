@@ -24,6 +24,8 @@
                     <tr>
                         <th class="hidden no-sort no-search"></th>
                         <th>Title</th>
+                        <th>Leaders</th>
+                        <th>Members</th>
                         <th>Description</th>
                         <th>start_date</th>
                         <th>deadline</th>
@@ -50,6 +52,8 @@
             columns: [
                 { data: 'plus-icon', name: 'plus-icon' }, 
                 { data: 'images', name: 'images' }, 
+                { data: 'leaders', name: 'leaders' }, 
+                { data: 'members', name: 'members' }, 
                 { data: 'description', name: 'description' }, 
                 { data: 'start_date', name: 'start_date' }, 
                 { data: 'deadline', name: 'deadline' }, 
