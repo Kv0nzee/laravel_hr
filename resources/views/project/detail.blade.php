@@ -65,8 +65,12 @@
         // Display existing images
         <?php if (!is_null($project->images)): ?>
             <?php foreach ($project->images as $image): ?>
-                var imgSrc = '<?php echo "/storage/" . $image; ?>';
-                $('#imagePreviews').append($('<a>').attr('href', imgSrc).attr('target', '_blank').append($('<img>').attr('src', imgSrc).addClass('object-cover w-12 h-12 rounded-xl')));
+            var imgSrc = '<?php echo "/storage/" . $image; ?>';
+            var imgElement = $('<img>').attr('src', imgSrc).addClass('object-cover w-12 h-12 rounded-xl');
+            $('#imagePreviews').append(imgElement);
+
+            // Initialize Viewer.js on the image link
+            new Viewer(imgElement[0]);
             <?php endforeach; ?>
         <?php endif; ?>
 

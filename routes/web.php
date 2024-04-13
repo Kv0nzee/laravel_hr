@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthUserController;
 use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\MyProjectController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProjectController;
@@ -60,6 +61,7 @@ Route::middleware('auth')->group(function(){
     Route::delete('/department/{id}/delete', [DepartmentController::class, 'delete'])->middleware('permission:delete departments');  // delete department
 
     //project page
+    Route::resource('myproject', MyProjectController::class)->middleware('permission:view projects');//my project table
     Route::resource('project', ProjectController::class)->middleware('permission:view projects');//project table
     Route::get('project/create', [ProjectController::class, 'createView'])->middleware('permission:create projects');//create project
     Route::post('project/create', [ProjectController::class, 'store'])->middleware('permission:create projects');//store project
