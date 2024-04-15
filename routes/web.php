@@ -12,6 +12,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\ScannerController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Models\CompanySetting;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,13 @@ Route::middleware('auth')->group(function(){
     Route::get('/project/{id}/edit', [ProjectController::class, 'edit'])->middleware('permission:edit projects');  // edit project
     Route::patch('/project/{id}/update', [ProjectController::class, 'update'])->middleware('permission:edit projects');  // update project
     Route::delete('/project/{id}/delete', [ProjectController::class, 'delete'])->middleware('permission:delete projects');  // delete project
+
+    //task page
+    // Route::resource('task', TaskController::class)->middleware('permission:view tasks');//task table
+    Route::post('/task/create', [TaskController::class, 'store'])->middleware('permission:create tasks');//store task
+    Route::get('/task/{id}/edit', [TaskController::class, 'edit'])->middleware('permission:edit tasks');  // edit task
+    Route::patch('/task/{id}/update', [TaskController::class, 'update'])->middleware('permission:edit tasks');  // update task
+    Route::delete('/task/{id}/delete', [TaskController::class, 'delete'])->middleware('permission:delete tasks');  // delete task
 
     //role page
     Route::resource('role', RoleController::class)->middleware('permission:view roles');//role table

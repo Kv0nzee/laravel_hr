@@ -8,7 +8,7 @@
         placeholder=" "
         required
         rows="2"
-        maxlength="200"
+        maxlength="800"
     >{{ old($name, $value) }}</textarea>
     <label
         for="{{ $name }}"

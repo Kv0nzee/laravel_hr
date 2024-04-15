@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -21,6 +22,9 @@ class ProjectController extends Controller
             return DataTables::of($data)
                 ->filterColumn('images', function($query, $keyword){
                         $query->where('title', 'like', '%' .$keyword. '%');
+                })
+                ->editColumn('description', function($each){
+                    return Str::limit($each->description, 25);
                 })
                 ->editColumn('updated_at', function($each){
                     return Carbon::parse($each->updated_at)->format('Y-m-d H:i:s');
