@@ -122,3 +122,8 @@ div.dt-container .dt-paging .pagination{
     width: 0;
     display: none;
 }
+
+.sortable-ghost{
+    background-color: #eee !important;
+    border: dashed #333 !important;
+}

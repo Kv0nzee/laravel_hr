@@ -75,6 +75,7 @@ Route::middleware('auth')->group(function(){
     Route::post('/task/create', [TaskController::class, 'store'])->middleware('permission:create tasks');//store task
     Route::get('/task/{id}/edit', [TaskController::class, 'edit'])->middleware('permission:edit tasks');  // edit task
     Route::patch('/task/{id}/update', [TaskController::class, 'update'])->middleware('permission:edit tasks');  // update task
+    Route::patch('/task/{id}/status', [TaskController::class, 'updateStatus'])->middleware('permission:edit tasks');  // update status
     Route::delete('/task/{id}/delete', [TaskController::class, 'delete'])->middleware('permission:delete tasks');  // delete task
 
     //role page

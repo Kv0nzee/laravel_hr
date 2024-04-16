@@ -89,7 +89,7 @@
             // Get the post ID from the data-id attribute of the delete button
             var id = $(this).data('id');
             // Show toastr confirmation dialog
-            toastr.warning('Are you sure you want to delete this department? Click to confirm, else it will cancel', 'Confirmation', {
+            toastr.warning('Are you sure you want to delete this task? Click to confirm, else it will cancel', 'Confirmation', {
                 closeButton: true,
                 positionClass: 'toast-top-right',
                 onclick: function (toast) {
