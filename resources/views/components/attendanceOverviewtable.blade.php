@@ -1,18 +1,18 @@
 <!-- Table to display attendance overview -->
     <table id="myTable" class="table w-full">
         <thead class="overflow-x-scroll">
-            <tr>
+            <tr class="bg-gray-800 text-neutral-50">
                 <!-- Table header for employee names -->
                 <th class="text-nowrap">Employee Name</th>
                 <!-- Table headers for each day of the selected month -->
                 @foreach ($periods as $period)
-                    <th class="no-sort text-center @if($period->format('D') == 'Sat' || $period->format('D') == 'Sun') alert alert-danger @endif">{{$period->format('d')}} <br/> {{$period->format('D')}}</th>
+                    <th class="no-sort text-center @if($period->format('D') == 'Sat' || $period->format('D') == 'Sun') text-yellow-600 @endif">{{$period->format('d')}} <br/> {{$period->format('D')}}</th>
                 @endforeach
             </tr>
         </thead>
         <tbody>
             @foreach ($employees as $employee)
-                <tr>
+            <tr class="bg-gray-800 ">
                     <!-- Display employee name in the first column -->
                     <td>{{$employee->name}}</td>
                     <!-- Loop through each day of the selected month -->
@@ -64,6 +64,24 @@
     
 
     table = $('#myTable').DataTable({
+        layout: {
+                dom: {
+                    button: {
+                        tag: 'button',
+                        className: 'btn'
+                    },
+                    top: {
+                        className: 'top-buttons'
+                    }
+                },
+                topStart: {
+                    buttons: [
+                                {
+                                    extend: 'pageLength'
+                                },
+                            ]
+                        }
+            },
         scrollX: true,
         fixedHeader: true,
         columnDefs: [

@@ -21,7 +21,7 @@
         <div class="w-full overflow-hidden table-responsive">
             <table id="myTable"  class="table w-full display table-bordered">
                 <thead>
-                    <tr>
+                    <tr class="bg-gray-800 text-neutral-50">
                         <th class="hidden no-sort no-search"></th>
                         <th>Employee Id</th>
                         <th>Name</th>
@@ -43,6 +43,100 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var table = $('#myTable').DataTable({
+            layout: {
+                dom: {
+                    button: {
+                        tag: 'button',
+                        className: 'btn'
+                    },
+                    top: {
+                        className: 'top-buttons'
+                    }
+                },
+                topStart: {
+                    buttons: [
+                                {
+                                    extend: 'pdfHtml5',
+                                    text: '<span class="font-bold text-md"><i class="mr-2 bi bi-filetype-pdf"></i>PDF</span>',
+                                    orientation: 'potrait',
+                                    pageSize: 'A4',
+                                    title:"Employees",
+                                    exportOptions:{
+                                        columns:[1,2,3,4,5,6]
+                                    },
+                                    customize: function (doc) {
+                                                    //Remove the title created by datatTables
+                                                    doc.content.splice(0,1);
+                                                    var now = new Date();
+                                                    var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                                                    doc.pageMargins = [20,60,20,30];
+                                                    doc.defaultStyle.fontSize = 8;
+                                                    doc.styles.tableHeader.fontSize = 8;
+                                                    doc.styles.tableHeader.fillColor = '#343a40'; // Set background color for table header
+                                                    doc.styles.tableHeader.color = '#fff'; // Set text color for table header
+                                                    doc.content[0].table.widths = '*';
+                                                    doc['header']=(function() {
+                                                        return {
+                                                            columns: [
+                            
+                                                                {
+                                                                    alignment: 'left',
+                                                                    italics: true,
+                                                                    text: 'Employee Table ' + now,
+                                                                    fontSize: 18,
+                                                                    margin: [10,0],
+                                                                    bold: true
+                                                                },
+                                                                {
+                                                                    alignment: 'right',
+                                                                    fontSize: 14,
+                                                                    text: 'BRNYR HR',
+                                                                    bold: 900,
+                                                                }
+                                                            ],
+                                                            margin: 20
+                                                        }
+                                                    });
+                            
+                                                    doc['footer']=(function(page, pages) {
+                                                        return {
+                                                            columns: [
+                                                                {
+                                                                    alignment: 'left',
+                                                                    text: ['Created on: ', { text: jsDate.toString() }]
+                                                                },
+                                                                {
+                                                                    alignment: 'right',
+                                                                    text: ['page ', { text: page.toString() },  ' of ', { text: pages.toString() }]
+                                                                }
+                                                            ],
+                                                            margin: 20
+                                                        }
+                                                    });
+                            
+                                                    var objLayout = {};
+                                                    objLayout['hLineWidth'] = function(i) { return .5; };
+                                                    objLayout['vLineWidth'] = function(i) { return .5; };
+                                                    objLayout['hLineColor'] = function(i) { return '#aaa'; };
+                                                    objLayout['vLineColor'] = function(i) { return '#aaa'; };
+                                                    objLayout['paddingLeft'] = function(i) { return 4; };
+                                                    objLayout['paddingRight'] = function(i) { return 4; };
+                                                    doc.content[0].layout = objLayout;
+                                                    }
+                                },
+                                {
+                                    extend: 'pageLength'
+                                },
+                                {
+                                    text: "<i class='bi bi-arrow-repeat'></i> Refresh",
+                                    action: function(e, dt, node, config){
+                                        dt.ajax.reload(null, false);
+                                    }
+                                }
+                            ]
+                        }
+            },
+            lengthMenu: [[10,25,50,100,500], ['10 rows', '25 rows', '50 rows', '100 rows', '500 rows']],
             processing: true,
             serverSide: true,
             ajax: '{{ route("employee.index") }}', 

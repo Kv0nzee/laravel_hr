@@ -42,7 +42,7 @@
         <div class="w-full overflow-hidden table-responsive">
             <table id="datatable"  class="table w-full display table-bordered">
                 <thead>
-                    <tr>
+                    <tr class="bg-gray-800 text-neutral-50">
                         <th class="hidden no-sort no-search"></th>
                         <th>Employee Name</th>
                         <th>Date</th>

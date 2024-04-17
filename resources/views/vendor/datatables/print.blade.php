@@ -16,13 +16,13 @@
         <table class="table table-bordered table-condensed table-striped">
             @foreach($data as $row)
                 @if ($loop->first)
-                    <tr>
+                    <tr class="bg-gray-800 text-neutral-50">
                         @foreach($row as $key => $value)
                             <th>{!! $key !!}</th>
                         @endforeach
                     </tr>
                 @endif
-                <tr>
+                <tr class="bg-gray-800 text-neutral-50">
                     @foreach($row as $key => $value)
                         @if(is_string($value) || is_numeric($value))
                             <td>{!! $value !!}</td>

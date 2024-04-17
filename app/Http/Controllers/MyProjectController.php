@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use App\Models\ProjectLeader;
-use App\Models\ProjectMember;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Str;
 
 class MyProjectController extends Controller
 {
@@ -31,15 +27,18 @@ class MyProjectController extends Controller
                 ->editColumn('updated_at', function($each){
                     return Carbon::parse($each->updated_at)->format('Y-m-d H:i:s');
                 })
+                ->editColumn('description', function($each){
+                    return str::limit($each->description, 25);
+                })
                 ->editColumn('images', function($each){
                     if ($each->images) {
                         $html = '<div>  <p class="font-bold text-md">'. $each->title .'</p><div class="flex flex-wrap">';
                         foreach ($each->images as $image) {
                             $html .= '<div class="w-24 h-20 m-2 overflow-hidden bg-gray-200 rounded-lg shadow-md">
                                         <img src="' . asset('storage/' . $image) . '" alt="profile image" class="object-cover w-full h-full">
+                                        <p class="font-bold text-md">'. $each->title .'</p>
                                       </div>';
                         }
-                      
                         $html .= '</div>';
                         return $html;
                     } else {
@@ -54,6 +53,7 @@ class MyProjectController extends Controller
                             $profileImage = $leader->profile_img ? asset('storage/' . $leader->profile_img) : asset('/storage/images/avatarlogo.jpg');
                             $html .= '<div class="w-12 h-12 m-2 overflow-hidden bg-gray-200 rounded-lg shadow-md">
                                         <img src="' . $profileImage . '" alt="profile image" class="object-cover w-full h-full">
+                                        <p class="font-bold text-gray-700 text-md">'. $leader->name .',</p>
                                     </div>';
                         }
                     }
@@ -69,6 +69,7 @@ class MyProjectController extends Controller
                             $profileImage = $member->profile_img ? asset('storage/' . $member->profile_img) : asset('/storage/images/avatarlogo.jpg');
                             $html .= '<div class="w-12 h-12 m-2 overflow-hidden bg-gray-200 rounded-lg shadow-md">
                                         <img src="' . $profileImage . '" alt="profile image" class="object-cover w-full h-full">
+                                        <p class="font-bold text-gray-700 text-md">'. $member->name .',</p>
                                     </div>';
                         }
                     }

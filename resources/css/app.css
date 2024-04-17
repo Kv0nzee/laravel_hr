@@ -127,3 +127,10 @@ div.dt-container .dt-paging .pagination{
     background-color: #eee !important;
     border: dashed #333 !important;
 }
+
+.dt-button{
+    background-color: #1F2937 !important;
+    outline: none !important;
+    border: none !important;
+    color: white !important;
+}

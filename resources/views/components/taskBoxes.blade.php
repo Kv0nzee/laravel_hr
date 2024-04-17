@@ -4,7 +4,7 @@
     <div class="flex flex-col md:flex-row gap-y-5 gap-x-5">
         <div class="w-full md:w-1/3">
             <p class="mb-3 font-bold text-neutral-800 text-md">Pending</p>
-            <ul class="min-h-96" id="pending">
+        <ul class="min-h-96" id="pending">
                 @foreach($project->tasks->where('status', 'Pending') as $task)
                 <li data-id={{$task->id}} class="flex flex-col w-full p-4 mx-auto my-auto mt-5 text-white h-52 gap rounded-xl bg-gradient-to-r from-red-500 via-red-600 to-red-700">
                     <div class="flex items-center justify-between w-full">
@@ -40,7 +40,7 @@
         <div class="w-full md:w-1/3">
             <p class="mb-3 font-bold text-neutral-800 text-md">In Progress</p>
             @foreach($project->tasks->where('status', 'In Progress') as $task)
-            <ul class="min-h-96" id="inprogress">
+        <ul class="min-h-96" id="inprogress">
                 <li data-id={{$task->id}} class="flex flex-col w-full p-4 mx-auto my-auto mt-5 text-white h-52 gap rounded-xl bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-700">
                     <div class="flex items-center justify-between w-full">
                         <span class="font-bold text-gray-200 text-md">Priority: {{$task->priority}}</span>
@@ -75,7 +75,7 @@
         </div>
         <div class="w-full md:w-1/3">
             <p class="mb-3 font-bold text-neutral-800 text-md">Complete</p>
-            <ul class="min-h-96" id="complete">
+        <ul class="min-h-96" id="complete">
             @foreach($project->tasks->where('status', 'Complete') as $task)
             <li data-id={{$task->id}} class="flex flex-col w-full p-4 mx-auto my-auto mt-5 text-white h-52 gap rounded-xl bg-gradient-to-r from-green-500 via-green-600 to-green-700">
                 <div class="flex items-center justify-between w-full">

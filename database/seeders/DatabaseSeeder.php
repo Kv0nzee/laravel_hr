@@ -115,12 +115,41 @@ class DatabaseSeeder extends Seeder
             $role->syncPermissions($userDefaultPermissions);
         }
 
+        $hrPermissions = [
+            'create employees',
+            'view employees',
+            'edit employees',
+            'delete employees',
+            'create attendance',
+            'view attendance',
+            'edit attendance',
+            'delete attendance',
+            'create salary',
+            'view salary',
+            'edit salary',
+            'delete salary',
+            'attendance overview',
+            'view payroll',
+        ];
+        
+        $hrRole = Role::where('name', 'HR')->first();
+        $hrRole->syncPermissions($hrPermissions);
+
+        $managerPermissions = [
+            'view employees',
+            'view attendance',
+            'view payroll',
+        ];
+        
+        $managerRole = Role::where('name', 'Manager')->first();
+        $managerRole->syncPermissions($managerPermissions);
+
         // Assign all permissions to the 'Admin' role
         $permissions = Permission::pluck('id')->all();
         $adminRole = Role::where('name', 'Admin')->first();
         $adminRole->syncPermissions($permissions);
         User::factory()->create(['name' => 'hradmin', 'email' => 'admin@gmail.com', 'password' => 'admin@gmail.com', 'pin_code' => Hash::make('123456')])->syncRoles($adminRole);
-        User::factory()->count(5)->create();
+        User::factory()->count(20)->create();
         
         if (CompanySetting::count() === 0) {
             CompanySetting::create([
