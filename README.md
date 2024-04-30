@@ -1,66 +1,98 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# HR Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![image](https://github.com/Kv0nzee/laravel_hr/assets/62888962/63fc8857-0225-451e-b33c-410546548259)
 
-## About Laravel
+## Overview
+The HR Management System is a Laravel-based web application designed to streamline and automate various human resources tasks within an organization. It provides a centralized platform for managing employee information, tracking attendance, processing payroll, and more.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
+1. **Employee Management**: 
+   - Add, view, edit, and delete employee records.
+   - Maintain employee profiles with details such as name, email, department, and position.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. **Attendance Tracking**:
+   - Record daily check-ins and check-outs for employees.
+   - View attendance reports and summaries for individual employees or the entire organization.
+   - Check in using QR code or PIN code for quick and easy attendance tracking.
+     
+3. **Salary Management**:
+   - Track salary details for each employee, including earnings, deductions, and bonuses.
+   - Generate salary reports and statements for payroll processing.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+4. **Department Management**:
+   - Create, update, and delete department records.
+   - Assign employees to departments for organizational structure and reporting.
 
-## Learning Laravel
+5. **Project Management**:
+   - Create and manage projects within the organization.
+   - Assign employees to projects and define project timelines and milestones.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+6. **Task Management**:
+   - Break down projects into tasks and subtasks.
+   - Assign tasks to employees and track task progress and completion status.
+   - Set deadlines and priorities for tasks to ensure timely completion.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+7. **Role and Permission Management**:
+   - Define roles and permissions for different user types (e.g., admin, manager, HR).
+   - Assign permissions to roles to control access to system features and functionalities.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
+1. Clone the repository to your local machine.
+   git clone https://github.com/Kv0nzee/laravel_hr.git
 
-## Laravel Sponsors
+2. Navigate to the project directory.
+    composer install
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. Copy the .env.example file and rename it to .env. Update the necessary environment variables such as database credentials and application URL.
 
-### Premium Partners
+4. Generate an application key.
+    php artisan key:generate
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+5. Run database migrations and seeders to populate the database with initial data.
+    php artisan migrate --seed
 
-## Contributing
+6. Serve the application.
+    php artisan serve
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+7. Access the application in your web browser at http://localhost:8000.
 
-## Code of Conduct
+## Usage
+1. **Login**:
+    Use the default login credentials provided in the seeders or register a new account.
+    For admin access: email:admin@gmail.com, password:admin@gmail.com
+   
+2. **Navigate**:
+    Explore the different modules and functionalities available in the application.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. **Manage Employees**:
+    Add, edit, and delete employee records.
+    View detailed employee profiles and manage department assignments.
+   
+4. **Track Attendance**:
+    Record employee check-ins and check-outs.
+    Generate attendance reports and summaries.
+    Optionally, check in using QR code or PIN code for quick attendance tracking.
 
-## Security Vulnerabilities
+5. **Process Payroll**:
+    Manage salary details for each employee.
+    Generate payroll reports and statements.
+6. **Manage Projects and Tasks**:
+    Create and manage projects.
+    Break down projects into tasks and assign them to employees.
+    Track task progress and completion status.
+    Set deadlines and priorities for tasks.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+7. **Manage Roles and Permissions**:
+    Define roles for different user types.
+    Assign permissions to control access to system features.
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This version now includes the project and task management features in the features section and mentions them in the usage section. Feel free to adjust the wording or add more details as needed.
+
+## Feedback and Suggestions
+We welcome any feedback or suggestions you may have to improve the HR Management System. If you have any ideas for new features, improvements, or general feedback, please don't hesitate to reach out to us.
+
+## Contact Information
+For any inquiries, feedback, or collaboration opportunities regarding the HR Management System project, feel free to contact us:
+
+- **Email**: [kaungzawhein@gmail.com](mailto:kaungzawhein@gmail.com)
